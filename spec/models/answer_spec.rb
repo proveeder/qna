@@ -1,5 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Question, type: :model do
+RSpec.describe Answer, type: :model do
   it { should validate_presence_of :body }
+  it { should belong_to(:question) }
 end
