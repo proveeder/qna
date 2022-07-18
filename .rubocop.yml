@@ -1,0 +1,6 @@
+# missing top-level documentation
+Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
