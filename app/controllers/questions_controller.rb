@@ -1,13 +1,13 @@
 class QuestionsController < ApplicationController
   # before_action :set_question, only: %i[show edit update destroy]
 
-  # def index
-  #   @questions = Question.all
-  # end
-  #
-  def new
-    @question = Question.new
+  def index
+    @questions = Question.all
   end
+
+  # def new
+  #   @question = Question.new
+  # end
 
   def create
     @question = Question.new(question_params)
