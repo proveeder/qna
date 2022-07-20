@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  # let(:question) { create(:question) }
+  let(:question) { create(:question) }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
@@ -16,29 +16,36 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  # describe 'GET #show' do
-  #   before { get :show, params: { id: question } }
-  #
-  #   it 'assigns requested question to @question' do
-  #     expect(assigns(:question)).to eq question
-  #   end
-  #
-  #   it 'render show view' do
-  #     expect(response).to render_template :show
-  #   end
-  # end
+  describe 'GET #show' do
+    before { get :show, params: { id: question } }
 
-  # describe 'GET #new' do
-  #   before { get :new }
-  #
-  #   it 'assigns a new Question to @question' do
-  #     expect(assigns(:question)).to be_a_new(Question)
-  #   end
-  #
-  #   it 'renders a new view' do
-  #     expect(response).to render_template :new
-  #   end
-  # end
+    it 'assigns requested question to @question' do
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'render show view' do
+      expect(response).to render_template :show
+    end
+  end
+
+  describe 'GET #new' do
+    before do
+      # devise stuff
+      user = FactoryBot.create(:user)
+      allow(controller).to receive(:authenticate_user!).and_return(true)
+      allow(controller).to receive(:current_user).and_return(user)
+
+      get :new
+    end
+
+    it 'assigns a new Question to @question' do
+      expect(assigns(:question)).to be_a_new(Question)
+    end
+
+    it 'renders a new view' do
+      expect(response).to render_template :new
+    end
+  end
 
   # describe 'GET #edit' do
   #   before { get :edit, params: { id: question } }
@@ -53,16 +60,22 @@ RSpec.describe QuestionsController, type: :controller do
   # end
 
   describe 'POST #create' do
+    before do
+      # devise stuff
+      user = FactoryBot.create(:user)
+      allow(controller).to receive(:authenticate_user!).and_return(true)
+      allow(controller).to receive(:current_user).and_return(user)
+    end
+
     context 'with valid attributes' do
       it 'saves new question to db' do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
       end
 
-      # TODO: uncomment for redirect
-      # it 'redirect to show view' do
-      #   post :create, params: { question: attributes_for(:question) }
-      #   expect(response).to redirect_to question_path(assigns(:question))
-      # end
+      it 'redirect to show view' do
+        post :create, params: { question: attributes_for(:question) }
+        expect(response).to redirect_to question_path(assigns(:question))
+      end
     end
 
     context 'with invalid attributes' do
@@ -70,11 +83,10 @@ RSpec.describe QuestionsController, type: :controller do
         expect { post :create, params: { question: attributes_for(:invalid_question) } }.to_not change(Question, :count)
       end
 
-      # TODO: uncomment
-      # it 're-renders "new" view' do
-      #   post :create, params: { question: attributes_for(:invalid_question) }
-      #   expect(response).to render_template :new
-      # end
+      it 're-renders "new" view' do
+        post :create, params: { question: attributes_for(:invalid_question) }
+        expect(response).to render_template :new
+      end
     end
   end
 
