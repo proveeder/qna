@@ -29,14 +29,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #new' do
-    before do
-      # devise stuff
-      user = FactoryBot.create(:user)
-      allow(controller).to receive(:authenticate_user!).and_return(true)
-      allow(controller).to receive(:current_user).and_return(user)
-
-      get :new
-    end
+    sign_in_user
+    before { get :new }
 
     it 'assigns a new Question to @question' do
       expect(assigns(:question)).to be_a_new(Question)
@@ -60,12 +54,7 @@ RSpec.describe QuestionsController, type: :controller do
   # end
 
   describe 'POST #create' do
-    before do
-      # devise stuff
-      user = FactoryBot.create(:user)
-      allow(controller).to receive(:authenticate_user!).and_return(true)
-      allow(controller).to receive(:current_user).and_return(user)
-    end
+    sign_in_user
 
     context 'with valid attributes' do
       it 'saves new question to db' do
