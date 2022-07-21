@@ -1,1 +1,15 @@
+table
+  thead
+    tr
+      th All questions:
+  tbody
+    - if @questions.empty?
+      tr
+        td No questions asked yet
+    - else
+      - @questions.each do |q|
+        tr
+          td id="question-#{q.id}"
+            = q.title
+
 p= link_to 'Ask question', new_question_path
