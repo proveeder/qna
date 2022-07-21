@@ -20,7 +20,8 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def show; end
+  def show;
+  end
 
   # def update
   #   if @question.update(question_params)

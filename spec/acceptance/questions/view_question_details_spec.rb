@@ -6,12 +6,26 @@ feature 'View details of question', '
   I want to be able to view details of question
 ' do
 
-  scenario 'Authenticated user answer question' do
-    @question = create(:question)
+  given(:question) { create(:question) }
 
-    visit question_path(@question)
+  scenario 'User view question with answers' do
+    FactoryBot.create_list :answer, 2, question: question
 
-    expect(page).to have_content @question.title
-    expect(page).to have_content @question.body
+    visit question_path(question)
+
+    expect(page).to have_content question.title
+    expect(page).to have_content question.body
+
+    answers_on_question = question.answers
+    answers_on_question.each { |answer| expect(page).to have_content answer.body }
+  end
+
+  scenario 'User view question without answers' do
+    visit question_path(question)
+
+    expect(page).to have_content question.title
+    expect(page).to have_content question.body
+
+    expect(page).to have_content 'No answers for this question yet'
   end
 end
