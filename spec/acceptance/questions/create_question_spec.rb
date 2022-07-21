@@ -10,13 +10,7 @@ feature 'Create question', '
 
   scenario 'Authenticated user creates question' do
     sign_in(user)
-
-    visit questions_path
-    click_on 'Ask question'
-    fill_in 'Title', with: 'Test question'
-    fill_in 'Body', with: 'Test body'
-
-    click_on 'Create'
+    create_question
 
     expect(page).to have_content 'Your question was created successfully'
   end

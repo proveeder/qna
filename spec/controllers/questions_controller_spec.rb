@@ -113,16 +113,37 @@ RSpec.describe QuestionsController, type: :controller do
   #   end
   # end
 
-  # describe 'DELETE #destroy' do
-  #   before { question }
-  #
-  #   it 'deletes question' do
-  #     expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
-  #   end
-  #
-  #   it 'redirect to "index" view' do
-  #     delete :destroy, params: { id: question }
-  #     expect(response).to redirect_to questions_path
-  #   end
-  # end
+  describe 'DELETE #destroy' do
+    before { question }
+
+    context 'author delete question' do
+      # devise stuff
+      before do
+        allow(controller).to receive(:authenticate_user!).and_return(true)
+        allow(controller).to receive(:current_user).and_return(question.user)
+      end
+
+      it 'deletes question' do
+        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+      end
+
+      it 'redirect to "index" view' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
+      end
+    end
+
+    context 'anyone but author tries to delete question' do
+      sign_in_user
+
+      it 'do not delete question' do
+        expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
+      end
+
+      it 'recieves 403 status code' do
+        delete :destroy, params: { id: question }
+        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:forbidden])
+      end
+    end
+  end
 end

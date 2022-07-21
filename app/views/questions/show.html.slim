@@ -1,5 +1,7 @@
 p= @question.title
 p= @question.body
+- if @question.user == current_user
+  = button_to 'Delete question', @question, method: :delete, form: { id: 'delete-question' }
 
 - if @question.answers.empty?
   p No answers for this question yet

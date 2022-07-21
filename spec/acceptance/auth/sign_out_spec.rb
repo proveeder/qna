@@ -10,10 +10,7 @@ feature 'User sign out', '
 
   scenario 'Signed-in user try to sign out' do
     sign_in(user)
-
-    visit root_path
-    click_on 'Sign out'
-
+    sign_out
     expect(page).to have_content 'Signed out successfully.'
   end
 

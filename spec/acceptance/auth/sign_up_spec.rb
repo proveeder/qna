@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'User sign out', '
+feature 'User sign up', '
   In order to be able to use full site functionality
   As a non-registered user
   I want to be able to sign up

@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
-  before_action :authenticate_user!, only: %i[new create]
-  before_action :set_question, only: %i[show]
+  before_action :authenticate_user!, only: %i[new create destroy]
+  before_action :set_question, only: %i[show delete destroy]
 
   def index
     @questions = Question.all
@@ -20,8 +20,7 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def show;
-  end
+  def show; end
 
   # def update
   #   if @question.update(question_params)
@@ -31,10 +30,14 @@ class QuestionsController < ApplicationController
   #   end
   # end
 
-  # def destroy
-  #   @question.destroy
-  #   redirect_to questions_path
-  # end
+  def destroy
+    if @question.user == current_user
+      @question.destroy
+      redirect_to questions_path, notice: 'You deleted question successfully'
+    else
+      render status: :forbidden, json: @controller.to_json
+    end
+  end
 
   private
 
