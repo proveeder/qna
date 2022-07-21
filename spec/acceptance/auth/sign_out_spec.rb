@@ -19,6 +19,6 @@ feature 'User sign out', '
 
   scenario 'Not signed-in user try to sign out' do
     visit root_path
-    page.should_not have_css('#sign-out')
+    expect(page).not_to have_css('#sign-out')
   end
 end
