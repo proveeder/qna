@@ -15,7 +15,6 @@ feature 'User sign out', '
     click_on 'Sign up'
 
     expect(page).to have_content 'Welcome! You have signed up successfully.'
-    # save_and_open_page
   end
 
   scenario 'Registered user signs up' do
