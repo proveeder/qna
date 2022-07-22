@@ -17,6 +17,9 @@ feature 'Answer question', '
     fill_in 'Body', with: 'Some answer on question'
     click_on 'Add answer'
 
+    within '.answers' do
+      expect(page).to have_content 'Some answer on question'
+    end
     expect(page).to have_content 'Thanks for your answer!'
   end
 
