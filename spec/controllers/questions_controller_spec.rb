@@ -140,7 +140,7 @@ RSpec.describe QuestionsController, type: :controller do
         expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
       end
 
-      it 'recieves 403 status code' do
+      it 'receives 403 status code' do
         delete :destroy, params: { id: question }
         expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:forbidden])
       end

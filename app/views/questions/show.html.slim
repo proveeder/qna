@@ -6,8 +6,10 @@ p= @question.body
 - if @question.answers.empty?
   p No answers for this question yet
 - else
-  - @question.answers.each do |a|
-    p= a.body
+  - @question.answers.each do |answer|
+    p= answer.body
+    - if answer.user == current_user
+      = button_to 'Delete answer', [@question, answer], method: :delete, form: { id: 'delete-answer' }
 
 - if user_signed_in?
   = form_with model: [@question, Answer.new] do |f|
