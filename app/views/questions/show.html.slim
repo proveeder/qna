@@ -13,9 +13,11 @@ p= @question.body
         = button_to 'Delete answer', [@question, answer], method: :delete, form: { id: 'delete-answer' }
 
 - if user_signed_in?
-  = form_with model: [@question, Answer.new] do |f|
+  / local: false turns on ajax and works perfect with default rails settings
+  / remote: true and other things was deprecated and didn't work so didn't use them
+  = form_with model: [@question, Answer.new], local: false do |f|
     .field
-      = f.label :body
+      = f.label :body, 'Your answer'
       = f.text_area :body
     .actions
       = f.submit 'Add answer'

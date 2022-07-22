@@ -9,12 +9,13 @@ feature 'Answer question', '
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  scenario 'Authenticated user answer question with valid data' do
+  # still works good without any 'js: true' needed, didn't require any additional configuration
+  scenario 'Authenticated user answer question with valid data', js: true do
     sign_in(user)
 
     visit question_path(question)
 
-    fill_in 'Body', with: 'Some answer on question'
+    fill_in 'Your answer', with: 'Some answer on question'
     click_on 'Add answer'
 
     within '.answers' do
