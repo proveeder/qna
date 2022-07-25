@@ -3,23 +3,20 @@ p= @question.body
 - if @question.user == current_user
   = button_to 'Delete question', @question, method: :delete, form: { id: 'delete-question' }
 
-- if @question.answers.empty?
-  p No answers for this question yet
-- else
-  .answers
+.answers
+  - if @question.answers.empty?
+    p No answers for this question yet
+  - else
     - @question.answers.each do |answer|
-      p= answer.body
-      - if answer.user == current_user
-        = button_to 'Delete answer', [@question, answer], method: :delete, form: { id: 'delete-answer' }
+      = render 'answer', answer: answer
 
 - if user_signed_in?
-  / local: false turns on ajax and works perfect with default rails settings
-  / remote: true and other things was deprecated and didn't work so didn't use them
   = form_with model: [@question, Answer.new], local: false do |f|
-    .field
-      = f.label :body, 'Your answer'
-      = f.text_area :body
-    .actions
-      = f.submit 'Add answer'
+    = f.label :body, 'Your answer'
+    br
+    = f.text_area :body
+    #answer-errors
+    br
+    = f.submit 'Add answer'
 - else
   p You need to sign in or sign up before continuing.

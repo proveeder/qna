@@ -18,13 +18,15 @@ feature 'Answer question', '
     fill_in 'Your answer', with: 'Some answer on question'
     click_on 'Add answer'
 
+    sleep(1) # for ajax to work
+
     within '.answers' do
       expect(page).to have_content 'Some answer on question'
     end
     expect(page).to have_content 'Thanks for your answer!'
   end
 
-  scenario 'Authenticated user answer question with invalid data' do
+  scenario 'Authenticated user answer question with invalid data', js: true do
     sign_in(user)
 
     visit question_path(question)

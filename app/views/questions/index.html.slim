@@ -10,6 +10,6 @@ table
       - @questions.each do |q|
         tr
           td id="question-#{q.id}"
-            = q.title
+            = link_to q.title, q
 
 p= link_to 'Ask question', new_question_path

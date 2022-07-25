@@ -8,7 +8,8 @@ RSpec.describe AnswersController, type: :controller do
       it 'saves new answer to db' do
         expect do
           answer_attrs = attributes_for(:answer)
-          post :create, params: { question_id: answer_attrs[:question], answer: answer_attrs }
+          post :create, params: { question_id: answer_attrs[:question], answer: answer_attrs },
+                        format: :js
         end.to change(Answer, :count).by(1)
       end
     end
@@ -18,14 +19,9 @@ RSpec.describe AnswersController, type: :controller do
     context 'with invalid attributes' do
       it 'does not save new answer to db' do
         expect do
-          post :create, params: { question_id: answer_attrs[:question], answer: answer_attrs }
+          post :create, params: { question_id: answer_attrs[:question], answer: answer_attrs }, format: :js
         end.to_not change(Answer, :count)
       end
-    end
-
-    it 'redirect to question' do
-      post :create, params: { question_id: answer_attrs[:question], answer: answer_attrs }
-      expect(response).to redirect_to question_path(answer_attrs[:question])
     end
   end
 
