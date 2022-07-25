@@ -18,8 +18,6 @@ feature 'Answer question', '
     fill_in 'Your answer', with: 'Some answer on question'
     click_on 'Add answer'
 
-    sleep(1) # for ajax to work
-
     within '.answers' do
       expect(page).to have_content 'Some answer on question'
     end
