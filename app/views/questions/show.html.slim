@@ -5,7 +5,8 @@ p= @question.body
 
 .answers
   - if @question.answers.empty?
-    p No answers for this question yet
+    #no-answers-info
+      p No answers for this question yet
   - else
     - @question.answers.each do |answer|
       = render 'answer', answer: answer

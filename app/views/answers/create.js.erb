@@ -3,6 +3,7 @@
 <% else %>
   $(".answers").append('<%= render 'questions/answer', answer: @answer %>');
   $(".notice").text('Thanks for your answer!')
+  $('#no-answers-info').hide()
 <% end %>
 
 $('#answer_body').val('');
