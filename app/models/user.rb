@@ -6,6 +6,6 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :password, presence: true
 
-  has_many :questions
-  has_many :answers
+  has_many :questions, dependent: :nullify
+  has_many :answers, dependent: :nullify
 end
