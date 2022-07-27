@@ -1,9 +1,13 @@
 <% if @answer.errors.present? %>
   $('#answer-errors').html('You must enter text of your answer')
 <% else %>
-  $(".answers").append('<%= render 'questions/answer', answer: @answer %>');
+  $(".answers").append('<%= render 'answer', answer: @answer %>');
   $(".notice").text('Thanks for your answer!')
   $('#no-answers-info').hide()
 <% end %>
 
 $('#answer_body').val('');
+
+$(':input','#create-answer-form')
+    .val('')
+$('#create-answer-form').hide()

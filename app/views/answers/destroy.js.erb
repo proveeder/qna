@@ -1,0 +1,4 @@
+<% unless @answer.errors.present? %>
+  $('p:contains("<%= @answer.id %>")').parent().parent().remove()
+  $('#create-answer-form').show()
+<% end %>

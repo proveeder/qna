@@ -6,15 +6,16 @@
       p No answers for this question yet
   - else
     - @question.answers.each do |answer|
-      = render 'answer', answer: answer
+      = render 'answers/answer', answer: answer
 
 - if user_signed_in?
-  = form_with model: [@question, Answer.new], local: false do |f|
-    = f.label :body, 'Your answer'
-    br
-    = f.text_area :body
-    #answer-errors
-    br
-    = f.submit 'Add answer'
+  - if @question.answers.to_a.intersection(current_user.answers).empty?
+    = form_with model: [@question, Answer.new], local: false, html: { id: 'create-answer-form' } do |f|
+      = f.label :body, 'Your answer'
+      br
+      = f.text_area :body
+      #answer-errors
+      br
+      = f.submit 'Add answer'
 - else
   p You need to sign in or sign up before continuing.

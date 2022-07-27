@@ -1,0 +1,7 @@
+/ Text area causes jquery errors, do not touch
+= form_with model: [@question, answer], local: false do |f|
+  = f.label :body, 'Changed body'
+  br
+  = f.text_field :body
+  br
+  = f.submit 'Edit'

@@ -7,4 +7,5 @@ RSpec.describe Answer, type: :model do
   it { should belong_to(:question) }
   it { should belong_to(:user) }
   it { should_not allow_value('').for(:body) }
+  it { should validate_uniqueness_of(:user_id).scoped_to(:question_id) }
 end

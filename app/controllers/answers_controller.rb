@@ -1,8 +1,8 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
+  before_action :set_answer, only: %i[update destroy]
 
   def create
-    # TODO: refactor
     @answer = Answer.create(answer_params)
     @answer.question_id = params[:question_id]
     @answer.user = current_user
@@ -10,11 +10,17 @@ class AnswersController < ApplicationController
     @question = @answer.question
   end
 
+  def update
+    if @answer.user == current_user
+      @answer.update(answer_params)
+    else
+      render status: :forbidden, json: @controller.to_json
+    end
+  end
+
   def destroy
-    @answer = Answer.find(params[:id])
     if @answer.user == current_user
       @answer.destroy
-      redirect_to @answer.question, notice: 'You deleted your answer for this question'
     else
       render status: :forbidden, json: @controller.to_json
     end
@@ -24,5 +30,9 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:body)
+  end
+
+  def set_answer
+    @answer = Answer.find(params[:id])
   end
 end

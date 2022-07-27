@@ -1,0 +1,10 @@
+.answer
+  .answer-hidden-id
+    p= answer.id
+  .answer-body
+    p= answer.body
+  - if answer.user == current_user
+    .edit-answer
+      = render 'answers/form', answer: answer
+    = link_to 'Edit', '', id: 'edit-answer-link'
+    = button_to 'Delete answer', [@question, answer], local: false, remote: true, method: :delete, form: { id: 'delete-answer' }

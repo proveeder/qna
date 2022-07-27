@@ -25,6 +25,70 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  describe 'PATCH answers#update' do
+    let(:answer) { create(:answer) }
+
+    before do
+      allow(controller).to receive(:authenticate_user!).and_return(true)
+      allow(controller).to receive(:current_user).and_return(answer.user)
+    end
+
+    context 'author edit answer with valid data' do
+      it 'assigns answer to @answer' do
+        patch :update, params: { question_id: answer.question, id: answer, answer: { body: 'New body' } },
+                       format: :js
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'updates body' do
+        new_body = 'New body'
+        patch :update, params: { question_id: answer.question, id: answer, answer: { body: new_body } },
+                       format: :js
+        answer.reload
+        expect(answer.body).to eq new_body
+      end
+    end
+
+    context 'author edit answer with invalid data' do
+      it 'assigns answer to @answer' do
+        patch :update, params: { question_id: answer.question, id: answer, answer: { body: 'New body' } },
+                       format: :js
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'does not update body' do
+        old_body = answer.body
+        patch :update, params: { question_id: answer.question, id: answer, answer: { body: '' } },
+                       format: :js
+        answer.reload
+        expect(answer.body).to eq old_body
+      end
+    end
+
+    context 'anybody but author tries to edit answer' do
+      sign_in_user
+
+      it 'assigns answer to @answer' do
+        patch :update, params: { question_id: answer.question, id: answer, answer: { body: 'New body' } }
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'does not update body' do
+        old_body = answer.body
+        patch :update, params: { question_id: answer.question, id: answer, answer: { body: 'New body' } }
+        answer.reload
+        expect(answer.body).to eq old_body
+      end
+
+      it 'receives 403 status code' do
+        patch :update, params: { question_id: answer.question, id: answer, answer: { body: 'New body' } }
+        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:forbidden])
+      end
+    end
+
+    context 'Not authenticated user tries to update question'
+  end
+
   describe 'DELETE #destroy' do
     let(:answer) { create(:answer) }
 
@@ -36,13 +100,8 @@ RSpec.describe AnswersController, type: :controller do
     context 'author delete answer' do
       it 'deletes answer' do
         expect do
-          delete :destroy, params: { question_id: answer.question, id: answer }
+          delete :destroy, params: { question_id: answer.question, id: answer }, format: :js
         end.to change(Answer, :count).by(-1)
-      end
-
-      it 'redirect to "show" question view' do
-        delete :destroy, params: { question_id: answer.question, id: answer }
-        expect(response).to redirect_to answer.question
       end
     end
 

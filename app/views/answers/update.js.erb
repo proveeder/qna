@@ -1,0 +1,3 @@
+<% unless @answer.errors.present? %>
+  $('p:contains("<%= @answer.id %>")').parent().next().text('<%= @answer.body %>')
+<% end %>
