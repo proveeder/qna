@@ -41,18 +41,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  # describe 'GET #edit' do
-  #   before { get :edit, params: { id: question } }
-  #
-  #   it 'assigns requested question to @question' do
-  #     expect(assigns(:question)).to eq question
-  #   end
-  #
-  #   it 'render edit view' do
-  #     expect(response).to render_template :edit
-  #   end
-  # end
-
   describe 'POST #create' do
     sign_in_user
 
@@ -79,39 +67,58 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  # describe 'PATCH #update' do
-  #   context 'with valid attrs' do
-  #     it 'assigns requested question to @question' do
-  #       patch :update, params: { id: question, question: attributes_for(:question) }
-  #       expect(assigns(:question)).to eq question
-  #     end
-  #
-  #     it 'changes question attrs' do
-  #       patch :update, params: { id: question, question: { title: 'changed title', body: 'changed body' } }
-  #       question.reload
-  #       expect(question.title).to eq 'changed title'
-  #       expect(question.body).to eq 'changed body'
-  #     end
-  #
-  #     it 'redirect to updated question' do
-  #       patch :update, params: { id: question, question: attributes_for(:question) }
-  #       expect(response).to redirect_to question
-  #     end
-  #   end
-  #
-  #   context 'with invalid args' do
-  #     before { patch :update, params: { id: question, question: { title: 'changed title', body: nil } } }
-  #     it 'attrs of question does not change' do
-  #       question.reload
-  #       expect(question.title).to eq 'MyString'
-  #       expect(question.body).to eq 'MyText'
-  #     end
-  #
-  #     it 're-render "show" template' do
-  #       expect(response).to render_template :edit
-  #     end
-  #   end
-  # end
+  describe 'PATCH #update' do
+    before { question }
+
+    context 'author update question' do
+      before do
+        # devise stuff
+        allow(controller).to receive(:authenticate_user!).and_return(true)
+        allow(controller).to receive(:current_user).and_return(question.user)
+      end
+
+      it 'Assigns requested question to @question' do
+        patch :update, params: { id: question, question: { body: 'New body' } }, format: :js
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'Updates question body' do
+        new_body = 'New body'
+        patch :update, params: { id: question, question: { title: 'New title', body: new_body } }, format: :js
+        question.reload
+        expect(question.body).to eq new_body
+      end
+    end
+
+    context 'Authenticated user but not author tries to delete question' do
+      # re-sign-in
+      sign_in_user
+
+      it 'Assigns requested question to @question' do
+        patch :update, params: { id: question, question: { body: 'New body' } }
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'do not change question' do
+        old_body = question.body
+        patch :update, params: { id: question, question: { body: 'New body' } }
+        question.reload
+        expect(question.body).to eq old_body
+      end
+
+      it 'receives 403 status code' do
+        patch :update, params: { id: question, question: { body: 'New body' } }
+        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:forbidden])
+      end
+    end
+
+    context 'Not authenticated user tries to update question' do
+      it 'receives 302 status code' do
+        patch :update, params: { id: question, question: { body: 'New body' } }
+        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:found])
+      end
+    end
+  end
 
   describe 'DELETE #destroy' do
     before { question }
@@ -143,6 +150,13 @@ RSpec.describe QuestionsController, type: :controller do
       it 'receives 403 status code' do
         delete :destroy, params: { id: question }
         expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:forbidden])
+      end
+    end
+
+    context 'Not authenticated user tries to delete question' do
+      it 'receives 302 status code' do
+        delete :destroy, params: { id: question }
+        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:found])
       end
     end
   end

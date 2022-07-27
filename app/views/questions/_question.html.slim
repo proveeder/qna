@@ -1,0 +1,13 @@
+.question
+  #question-title
+    p= @question.title
+  #question-body
+    p= @question.body
+
+  - if @question.user == current_user
+    .edit-question
+      = render 'form', submit_text: 'Update'
+    p
+    = link_to 'Edit question', ''
+    p
+    = button_to 'Delete question', @question, method: :delete, form: { id: 'delete-question' }

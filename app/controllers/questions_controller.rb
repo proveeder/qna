@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
-  before_action :authenticate_user!, only: %i[new create destroy]
-  before_action :set_question, only: %i[show delete destroy]
+  before_action :authenticate_user!, only: %i[new create destroy update]
+  before_action :set_question, only: %i[show delete destroy update]
 
   def index
     @questions = Question.all
@@ -22,13 +22,15 @@ class QuestionsController < ApplicationController
 
   def show; end
 
-  # def update
-  #   if @question.update(question_params)
-  #     redirect_to @question
-  #   else
-  #     render :edit
-  #   end
-  # end
+  def update
+    if @question.user == current_user
+      @question.title = question_params[:title]
+      @question.body = question_params[:body].strip # required for jquery to be able to display it correctly
+      @question.save
+    else
+      render status: :forbidden, json: @controller.to_json
+    end
+  end
 
   def destroy
     if @question.user == current_user

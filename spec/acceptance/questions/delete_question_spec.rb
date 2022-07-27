@@ -2,7 +2,7 @@ require 'acceptance/acceptance_helper'
 
 feature 'Delete question', '
   In order to remove question from internet
-  As a question authore
+  As a question author
   I want to be able to delete question
 ' do
 

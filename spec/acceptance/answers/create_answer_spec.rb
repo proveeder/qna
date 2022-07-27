@@ -9,7 +9,6 @@ feature 'Answer question', '
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  # still works good without any 'js: true' needed, didn't require any additional configuration
   scenario 'Authenticated user answer question with valid data', js: true do
     sign_in(user)
 
