@@ -14,7 +14,7 @@ document.addEventListener("turbolinks:load", function() {
         }
     });
 
-    // edit answer
+    // edit question
     $('.question a').click(function(event) {
         event.preventDefault();
 

@@ -1,3 +1,6 @@
-<% unless @answer.errors.present? %>
-  $('p:contains("<%= @answer.id %>")').parent().next().text('<%= @answer.body %>')
+<% if @answer.errors.present? %>
+  $('#edit-answer-errors').html('<p>You must enter something</p>')
+<% else %>
+  $('#edit-answer-errors').html('');
+  $('p:contains("<%= @answer.id %>")').parent().next().text('<%= @answer.body %>');
 <% end %>

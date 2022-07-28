@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.configure do |config|
-  config.use_transactional_fixtures = false
+  # required or tests falls
+  config.use_transactional_fixtures = true
+
   config.include AcceptanceHelper, type: :feature
 
   config.before(:suite) do
@@ -9,11 +11,12 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
+    # required or tests falls
     DatabaseCleaner.strategy = :transaction
   end
 
   config.before(:each, js: true) do
-    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.strategy = :transaction
   end
 
   config.before(:each) do

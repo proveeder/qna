@@ -2,12 +2,10 @@
   $('#answer-errors').html('You must enter text of your answer')
 <% else %>
   $(".answers").append('<%= render 'answer', answer: @answer %>');
-  $(".notice").text('Thanks for your answer!')
   $('#no-answers-info').hide()
+  $(':input','#create-answer-form')
+      .val('')
+  $('#create-answer-form').hide()
 <% end %>
 
 $('#answer_body').val('');
-
-$(':input','#create-answer-form')
-    .val('')
-$('#create-answer-form').hide()
