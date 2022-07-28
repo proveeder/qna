@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   root to: 'questions#index'
 
   resources :questions, except: %i[edit] do
+    post :set_best_answer, on: :member
+
     resources :answers, only: %i[create destroy update]
   end
 end

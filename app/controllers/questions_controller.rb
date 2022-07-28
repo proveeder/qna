@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
-  before_action :authenticate_user!, only: %i[new create destroy update]
-  before_action :set_question, only: %i[show delete destroy update]
+  before_action :authenticate_user!, only: %i[new create destroy update set_best_answer]
+  before_action :set_question, only: %i[show delete destroy update set_best_answer]
 
   def index
     @questions = Question.all
@@ -20,7 +20,9 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @best_answer = Answer.find(@question.best_answer_id) unless @question.best_answer_id.nil?
+  end
 
   def update
     if @question.user == current_user
@@ -36,6 +38,16 @@ class QuestionsController < ApplicationController
     if @question.user == current_user
       @question.destroy
       redirect_to questions_path, notice: 'You deleted question successfully'
+    else
+      render status: :forbidden, json: @controller.to_json
+    end
+  end
+
+  def set_best_answer
+    if @question.user == current_user
+      @best_answer = Answer.find(params[:best_answer_id])
+      @question.best_answer_id = @best_answer.id
+      @question.save
     else
       render status: :forbidden, json: @controller.to_json
     end

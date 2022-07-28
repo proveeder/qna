@@ -1,0 +1,15 @@
+.best-answer
+  - unless @question.best_answer_id.nil?
+    p -------------------------------------------------------------
+    p Best answer:
+    = render 'answers/answer', answer: @best_answer
+    p -------------------------------------------------------------
+
+.answers
+  - if @question.answers.empty?
+    #no-answers-info
+      p No answers for this question yet
+  - else
+    - @question.answers.each do |answer|
+      - unless answer.id == @question.best_answer_id
+        = render 'answers/answer', answer: answer

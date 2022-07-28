@@ -160,4 +160,49 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  describe 'POST #set_best_answer' do
+    let(:answer) { create(:answer) }
+
+    context 'author set best answer' do
+      before do
+        # devise stuff
+        allow(controller).to receive(:authenticate_user!).and_return(true)
+        allow(controller).to receive(:current_user).and_return(answer.question.user)
+      end
+
+      it 'Assigns requested question to @question' do
+        post :set_best_answer, params: { id: answer.question, best_answer_id: answer }, format: :js
+        expect(assigns(:question)).to eq answer.question
+      end
+
+      it 'sets best answer' do
+        post :set_best_answer, params: { id: answer.question, best_answer_id: answer }, format: :js
+        question = answer.question
+        question.reload
+        expect(question.best_answer_id).to eq answer.id
+      end
+    end
+
+    context 'Authenticated user but not author tries to set best answer' do
+      sign_in_user
+
+      it 'Assigns requested question to @question' do
+        post :set_best_answer, params: { id: answer.question, best_answer_id: answer }
+        expect(assigns(:question)).to eq answer.question
+      end
+
+      it 'receives 403 status code' do
+        post :set_best_answer, params: { id: answer.question, best_answer_id: answer }
+        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:forbidden])
+      end
+    end
+
+    context 'Non-authenticated user tries to set best answer' do
+      it 'receives 302 status code' do
+        post :set_best_answer, params: { id: answer.question, best_answer_id: answer }
+        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:found])
+      end
+    end
+  end
 end
