@@ -3,6 +3,10 @@
     p= @question.title
   #question-body
     p= @question.body
+  p Attachments:
+  ol
+    - @question.attachments.each do |a|
+      li= a.file.file.filename
 
   - if @question.user == current_user
     .edit-question
