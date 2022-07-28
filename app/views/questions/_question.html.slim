@@ -6,12 +6,12 @@
   p Attachments:
   ol
     - @question.attachments.each do |a|
-      li= a.file.file.filename
+      li= link_to a.file.identifier, a.file.url
 
   - if @question.user == current_user
     .edit-question
       = render 'form', submit_text: 'Update'
-    p
-    = link_to 'Edit question', ''
-    p
+    br
+    = link_to 'Edit question', '', id: 'edit-q-link'
+    br
     = button_to 'Delete question', @question, method: :delete, form: { id: 'delete-question' }
