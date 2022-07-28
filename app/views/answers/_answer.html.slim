@@ -13,4 +13,4 @@
     .mark-as-best
       - unless answer == @best_answer
         = link_to 'Mark as best', set_best_answer_question_path(answer.question, best_answer_id: answer.id),
-                local: false, remote: true, method: :post
+                remote: true, method: :post
