@@ -19,13 +19,4 @@ feature 'View details of question', '
     answers_on_question = question.answers
     answers_on_question.each { |answer| expect(page).to have_content answer.body }
   end
-
-  scenario 'User view question without answers' do
-    visit question_path(question)
-
-    expect(page).to have_content question.title
-    expect(page).to have_content question.body
-
-    expect(page).to have_content 'No answers for this question yet'
-  end
 end

@@ -5,11 +5,15 @@
 
 - if user_signed_in?
   - if @question.answers.to_a.intersection(current_user.answers).empty?
-    = form_with model: [@question, Answer.new], local: false, html: { id: 'create-answer-form' } do |f|
+    = form_with model: [@question, @answer], local: false, html: { id: 'create-answer-form' } do |f|
       = f.label :body, 'Your answer'
       br
       = f.text_area :body
       #answer-errors
+      br
+        = f.fields_for :attachments do |a|
+          = a.label :file
+          = a.file_field :file
       br
       = f.submit 'Add answer'
 - else

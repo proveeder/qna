@@ -23,6 +23,8 @@ class QuestionsController < ApplicationController
 
   def show
     @best_answer = Answer.find(@question.best_answer_id) unless @question.best_answer_id.nil?
+    @answer = @question.answers.build
+    @answer.attachments.build
   end
 
   def update
@@ -61,6 +63,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, :user_id, attachments_attributes: [:file])
+    params.require(:question).permit(:title, :body, :user_id, attachments_attributes: [:file, :id])
   end
 end
