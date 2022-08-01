@@ -6,7 +6,10 @@
   p Attachments:
   ol
     - @question.attachments.each do |a|
-      li= link_to a.file.identifier, a.file.url
+      .attachment
+        li= link_to a.file.identifier, a.file.url
+        - if @question.user == current_user
+          = button_to 'Delete file', a, method: :delete, local: false, remote: true
   - if @question.user == current_user
     .edit-question
       = render 'form', submit_text: 'Update'

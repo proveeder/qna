@@ -7,4 +7,6 @@ Rails.application.routes.draw do
 
     resources :answers, only: %i[create destroy update]
   end
+
+  resources :attachments, only: %i[destroy]
 end
