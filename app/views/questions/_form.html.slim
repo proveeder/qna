@@ -7,9 +7,7 @@
   = f.label :body
   br
   = f.text_area :body
-  p Attachments
-  p
-    = f.fields_for :attachments do |a|
-      = a.label :file
-      = a.file_field :file
+  = f.fields_for :attachments do |a|
+  #add-attachment-link
+    = link_to_add_association 'Add', f, :attachments
   = f.submit submit_text

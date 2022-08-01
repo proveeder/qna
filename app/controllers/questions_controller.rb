@@ -28,8 +28,9 @@ class QuestionsController < ApplicationController
   end
 
   def update
+    # render partial: 'question'
     if @question.user == current_user
-      @question.title = question_params[:title]
+      @question.update(question_params)
       @question.body = question_params[:body].strip # required for jquery to be able to display it correctly
       @question.save
     else

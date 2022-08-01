@@ -7,7 +7,6 @@
   ol
     - @question.attachments.each do |a|
       li= link_to a.file.identifier, a.file.url
-
   - if @question.user == current_user
     .edit-question
       = render 'form', submit_text: 'Update'
@@ -15,4 +14,4 @@
     = link_to 'Edit question', '', id: 'edit-q-link'
     br
     = button_to 'Delete question', @question, method: :delete, form: { id: 'delete-question' }
-p .......................................................................................
+  p .......................................................................................
