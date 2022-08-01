@@ -20,11 +20,6 @@ class AnswersController < ApplicationController
 
   def destroy
     if @answer.user == current_user
-      # TODO: move to model
-      if @answer.question.best_answer_id == @answer.id
-        @answer.question.best_answer_id = nil
-        @answer.question.save
-      end
       @answer.destroy
     else
       render status: :forbidden, json: @controller.to_json

@@ -10,4 +10,15 @@ class Answer < ApplicationRecord
   has_many :attachments, as: :attachable, dependent: :destroy
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
+
+  before_destroy :nullify_best_answer
+
+  private
+
+  def nullify_best_answer
+    if question.best_answer_id == id
+      question.best_answer_id = nil
+      question.save
+    end
+  end
 end
