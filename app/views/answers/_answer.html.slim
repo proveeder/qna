@@ -3,6 +3,7 @@
     p= answer.id
   .answer-body
     p= answer.body
+  p= "Rating: #{1}"
   p Attachments
   ol
     - answer.attachments.each do |a|
@@ -19,6 +20,8 @@
         = link_to 'Mark as best', set_best_answer_question_path(@question, best_answer_id: answer.id),
                 remote: true, method: :post
   - unless current_user == answer.user
-    = button_to 'Like', vote_for_answer_question_answer_path(@question, answer), remote: true, params: { liked: true }
-    = button_to 'Dislike', vote_for_answer_question_answer_path(@question, answer), remote: true, params: { liked: false }
-p ________________________________________________
+    = button_to 'Like', vote_for_answer_question_answer_path(@question, answer), remote: true, params: { liked: true },
+            form: { class: 'change-answer-rating' }
+    = button_to 'Dislike', vote_for_answer_question_answer_path(@question, answer), remote: true,
+            params: { liked: false }, form: { class: 'change-answer-rating' }
+  p ________________________________________________
