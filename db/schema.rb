@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_29_090351) do
+ActiveRecord::Schema.define(version: 2022_08_02_083613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,28 @@ ActiveRecord::Schema.define(version: 2022_07_29_090351) do
     t.bigint "user_id"
     t.integer "best_answer_id"
     t.index ["user_id"], name: "index_questions_on_user_id"
+  end
+
+  create_table "user_answer_votes", force: :cascade do |t|
+    t.integer "answer_id"
+    t.integer "user_id"
+    t.boolean "liked"
+    t.boolean "disliked"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["answer_id"], name: "index_user_answer_votes_on_answer_id"
+    t.index ["user_id"], name: "index_user_answer_votes_on_user_id"
+  end
+
+  create_table "user_question_votes", force: :cascade do |t|
+    t.integer "question_id"
+    t.integer "user_id"
+    t.boolean "liked"
+    t.boolean "disliked"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_user_question_votes_on_question_id"
+    t.index ["user_id"], name: "index_user_question_votes_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
