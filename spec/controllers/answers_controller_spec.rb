@@ -121,4 +121,35 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'POST #vote_for_answer' do
+    let(:answer) { create(:answer) }
+
+    before do
+      allow(controller).to receive(:authenticate_user!).and_return(true)
+      allow(controller).to receive(:current_user).and_return(answer.user)
+    end
+
+    context 'author of answer tries to change answer rating' do
+      it 'receives 403 status code' do
+        post :vote_for_answer, params: { question_id: answer.question, id: answer, liked: true }, format: :json
+        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:forbidden])
+      end
+    end
+
+    context 'anyone but author of answer changes answer rating' do
+      sign_in_user
+
+      it 'changes answer rating' do
+        expect do
+          post :vote_for_answer, params: { question_id: answer.question, id: answer, liked: true }, format: :json
+        end.to change(UserAnswerVote, :count).by(1)
+      end
+
+      it 'returns rating =1' do
+        post :vote_for_answer, params: { question_id: answer.question, id: answer, liked: true }, format: :json
+        expect(JSON.parse(response.body)['rating']).to match(1)
+      end
+    end
+  end
 end

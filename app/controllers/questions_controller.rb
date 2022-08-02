@@ -58,7 +58,9 @@ class QuestionsController < ApplicationController
   end
 
   def vote_for_question
-    unless @question.user == current_user
+    if @question.user == current_user
+      render status: :forbidden, json: @controller.to_json
+    else
       @record = UserQuestionVote.find_or_create_by(user_id: current_user.id,
                                                    question_id: params[:id])
 

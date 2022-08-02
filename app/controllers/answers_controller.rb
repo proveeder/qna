@@ -28,7 +28,9 @@ class AnswersController < ApplicationController
   end
 
   def vote_for_answer
-    unless @answer.user == current_user
+    if @answer.user == current_user
+      render status: :forbidden, json: @controller.to_json
+    else
       @record = UserAnswerVote.find_or_create_by(user_id: current_user.id, answer_id: params[:id])
 
       # convert from string to proper bool values

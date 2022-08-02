@@ -3,7 +3,8 @@
     p= answer.id
   .answer-body
     p= answer.body
-  p= "Rating: #{1}"
+  p= "Rating: #{UserAnswerVote.where(answer_id: answer,
+          liked: true).count - UserAnswerVote.where(answer_id: answer, disliked: true).count}"
   p Attachments
   ol
     - answer.attachments.each do |a|
