@@ -66,7 +66,15 @@ class QuestionsController < ApplicationController
       @record.liked = ActiveModel::Type::Boolean.new.cast(params[:liked])
       @record.disliked = !ActiveModel::Type::Boolean.new.cast(params[:liked])
 
-      @record.save
+      respond_to do |format|
+        @record.save
+        format.json do
+          render json: { rating:
+                           UserQuestionVote.where(question_id: @question,
+                                                  liked: true).count - UserQuestionVote.where(question_id: @question,
+                                                                                              disliked: true).count }
+        end
+      end
     end
   end
 

@@ -1,5 +1,12 @@
 // required to work with turbolinks
 document.addEventListener("turbolinks:load", function() {
+    // change ration on index questions page
+    $(".change-question-rating").on('ajax:complete', function(e) {
+        let data = JSON.parse(e['detail'][0]['response']);
+        let rating = data['rating']
+        $(this).parent().children('p').html(`Rating: ${rating}`)
+    });
+
     // edit answer
     $('#edit-answer-link').click(function(event) {
         event.preventDefault();
