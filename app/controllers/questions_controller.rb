@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
-  before_action :authenticate_user!, only: %i[new create destroy update set_best_answer]
-  before_action :set_question, only: %i[show delete destroy update set_best_answer]
+  before_action :authenticate_user!, only: %i[new create destroy update set_best_answer vote_for_question]
+  before_action :set_question, only: %i[show delete destroy update set_best_answer vote_for_question]
 
   def index
     @questions = Question.all
@@ -54,6 +54,19 @@ class QuestionsController < ApplicationController
       @question.save
     else
       render status: :forbidden, json: @controller.to_json
+    end
+  end
+
+  def vote_for_question
+    unless @question.user == current_user
+      @record = UserQuestionVote.find_or_create_by(user_id: current_user.id,
+                                                   question_id: params[:id])
+
+      # convert from string to proper bool values
+      @record.liked = ActiveModel::Type::Boolean.new.cast(params[:liked])
+      @record.disliked = !ActiveModel::Type::Boolean.new.cast(params[:liked])
+
+      @record.save
     end
   end
 
