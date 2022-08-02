@@ -4,7 +4,7 @@ document.addEventListener("turbolinks:load", function() {
     $(".change-answer-rating").on('ajax:complete', function(e) {
         let data = JSON.parse(e['detail'][0]['response']);
         let rating = data['rating']
-        console.log($(this).parent().find('p:contains("Rating:")').html(`Rating: ${rating}`))
+        $(this).parent().find('p:contains("Rating:")').html(`Rating: ${rating}`)
     });
 
     // change ration on index questions page
