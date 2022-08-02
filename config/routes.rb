@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   resources :questions, except: %i[edit] do
     post :set_best_answer, on: :member
 
-    resources :answers, only: %i[create destroy update]
+    resources :answers, only: %i[create destroy update] do
+      post :vote_for_answer, on: :member
+    end
   end
 
   resources :attachments, only: %i[destroy]

@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, only: %i[create destroy]
-  before_action :set_answer, only: %i[update destroy]
+
+  before_action :authenticate_user!, only: %i[create destroy vote_for_answer]
+  before_action :set_answer, only: %i[update destroy vote_for_answer]
 
   def create
     @answer = Answer.create(answer_params)
@@ -23,6 +24,18 @@ class AnswersController < ApplicationController
       @answer.destroy
     else
       render status: :forbidden, json: @controller.to_json
+    end
+  end
+
+  def vote_for_answer
+    unless @answer.user == current_user
+      @record = UserAnswerVote.find_or_create_by(user_id: current_user.id, answer_id: params[:id])
+
+      # convert from string to proper bool values
+      @record.liked = ActiveModel::Type::Boolean.new.cast(params[:liked])
+      @record.disliked = !ActiveModel::Type::Boolean.new.cast(params[:liked])
+
+      @record.save
     end
   end
 

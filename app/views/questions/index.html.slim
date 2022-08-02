@@ -11,5 +11,9 @@ table
         tr
           td id="question-#{q.id}"
             = link_to q.title, q
+            - unless current_user == q.user
+              = button_to 'Like', ''
+              = button_to 'Dislike', ''
+            br
 
 p= link_to 'Ask question', new_question_path
