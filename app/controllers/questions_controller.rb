@@ -23,8 +23,9 @@ class QuestionsController < ApplicationController
 
   def show
     @best_answer = Answer.find(@question.best_answer_id) unless @question.best_answer_id.nil?
-    @answer = @question.answers.build
+    @answer = Answer.new
     @answer.attachments.build
+
   end
 
   def update
