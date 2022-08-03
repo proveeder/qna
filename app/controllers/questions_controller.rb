@@ -2,6 +2,8 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, only: %i[new create destroy update set_best_answer vote_for_question]
   before_action :set_question, only: %i[show delete destroy update set_best_answer vote_for_question]
 
+  after_action :publish_question, only: %i[create]
+
   def index
     @questions = Question.all
   end
@@ -82,6 +84,13 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def publish_question
+    nil if @question.errors.any?
+    ActionCable.server.broadcast('questions', ApplicationController.render(partial: 'questions/question_in_index',
+                                                                           locals: { q: @question,
+                                                                                     current_user: current_user }))
+  end
 
   def set_question
     @question = Question.find(params[:id])

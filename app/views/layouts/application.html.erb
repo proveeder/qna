@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= action_cable_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -16,6 +17,7 @@
     <p class="alert"><%= alert %></p>
 
     <% if user_signed_in? %>
+      <h1><%= current_user.email %></h1>
       <p><%= link_to 'Sign out', destroy_user_session_path, method: :delete, id: 'sign-out' %></p>
     <% else %>
       <p><%= link_to 'Sign in', new_user_session_path %></p>

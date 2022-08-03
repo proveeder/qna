@@ -5,6 +5,7 @@
 
 //= require jquery
 //= require jquery_ujs
+//= require action_cable
 
 // FILES
 require("@nathanvda/cocoon")
