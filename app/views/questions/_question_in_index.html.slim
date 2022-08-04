@@ -4,9 +4,9 @@ tr
   td
     - rating = UserQuestionVote.where(question_id: q, liked: true).count - UserQuestionVote.where(question_id: q, disliked: true).count
     p= "Rating: #{ rating }"
-    - unless current_user == q.user
-      = button_to 'Like', vote_for_question_question_path(q), remote: true, params: { liked: true },
-              form: { class: 'change-question-rating' }
-      = button_to 'Dislike', vote_for_question_question_path(q), remote: true, params: { liked: false },
-              form: { class: 'change-question-rating' }
+    / - unless current_user == q.user
+    = button_to 'Like', vote_for_question_question_path(q), remote: true, params: { liked: true },
+            form: { class: 'change-question-rating' }
+    = button_to 'Dislike', vote_for_question_question_path(q), remote: true, params: { liked: false },
+            form: { class: 'change-question-rating' }
     br

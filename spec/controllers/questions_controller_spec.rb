@@ -222,14 +222,7 @@ RSpec.describe QuestionsController, type: :controller do
       allow(controller).to receive(:current_user).and_return(question.user)
     end
 
-    context 'author of question tries to change answer rating' do
-      it 'receives 403 status code' do
-        post :vote_for_question, params: { id: question, liked: true }, format: :json
-        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:forbidden])
-      end
-    end
-
-    context 'anyone but author of question changes answer rating' do
+    context 'anyone changes answer rating' do
       sign_in_user
 
       it 'changes answer rating' do

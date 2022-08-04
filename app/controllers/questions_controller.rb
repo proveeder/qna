@@ -61,24 +61,20 @@ class QuestionsController < ApplicationController
   end
 
   def vote_for_question
-    if @question.user == current_user
-      render status: :forbidden, json: @controller.to_json
-    else
-      @record = UserQuestionVote.find_or_create_by(user_id: current_user.id,
-                                                   question_id: params[:id])
+    @record = UserQuestionVote.find_or_create_by(user_id: current_user.id,
+                                                 question_id: params[:id])
 
-      # convert from string to proper bool values
-      @record.liked = ActiveModel::Type::Boolean.new.cast(params[:liked])
-      @record.disliked = !ActiveModel::Type::Boolean.new.cast(params[:liked])
+    # convert from string to proper bool values
+    @record.liked = ActiveModel::Type::Boolean.new.cast(params[:liked])
+    @record.disliked = !ActiveModel::Type::Boolean.new.cast(params[:liked])
 
-      respond_to do |format|
-        @record.save
-        format.json do
-          render json: { rating:
-                           UserQuestionVote.where(question_id: @question,
-                                                  liked: true).count - UserQuestionVote.where(question_id: @question,
-                                                                                              disliked: true).count }
-        end
+    respond_to do |format|
+      @record.save
+      format.json do
+        render json: { rating:
+                         UserQuestionVote.where(question_id: @question,
+                                                liked: true).count - UserQuestionVote.where(question_id: @question,
+                                                                                            disliked: true).count }
       end
     end
   end
@@ -86,10 +82,11 @@ class QuestionsController < ApplicationController
   private
 
   def publish_question
-    nil if @question.errors.any?
-    ActionCable.server.broadcast('questions', ApplicationController.render(partial: 'questions/question_in_index',
-                                                                           locals: { q: @question,
-                                                                                     current_user: current_user }))
+    unless @question.errors.any?
+      ActionCable.server.broadcast('questions', ApplicationController.render(partial: 'questions/question_in_index',
+                                                                             locals: { q: @question,
+                                                                                       current_user: current_user }))
+    end
   end
 
   def set_question
