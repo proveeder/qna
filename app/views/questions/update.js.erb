@@ -4,5 +4,7 @@
     $('.question-errors').append('<p><%= message %></p>')
   <% end %>
 <% else %>
-  $('.question').html(`<%= render 'question', question: @question %>`)
+  $('#question-title').html(`<p><%= @question.title %></p>`)
+  $('#question-body').html(`<p><%= @question.body %></p>`)
+  $('.attachments').html('<%= render 'attachment', question: @question %>')
 <% end %>

@@ -1,1 +1,1 @@
-$('li:contains("<%= File.basename(@attachment.file.to_s) %>")').parent().remove()
+$('.attachments').html('<%= render 'questions/attachment', question: @attachment.attachable %>')
