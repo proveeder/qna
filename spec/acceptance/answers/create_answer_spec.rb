@@ -35,7 +35,7 @@ feature 'Answer question', '
   scenario 'Non-authenticated user try to answer question' do
     visit question_path(question)
 
-    expect(page).not_to have_xpath('//form')
+    expect(page).not_to have_css('#create-answer-form')
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 end

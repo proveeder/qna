@@ -1,0 +1,7 @@
+h4 Add your comment
+= form_with model: prefix + [Comment.new] do |f|
+  = f.label :text
+  br
+  = f.text_field :text
+  br
+  = f.submit

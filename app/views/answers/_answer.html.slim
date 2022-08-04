@@ -6,24 +6,32 @@
   p= "Rating: #{UserAnswerVote.where(answer_id: answer,
           liked: true).count - UserAnswerVote.where(answer_id: answer, disliked: true).count}"
   p Attachments
+
   ol
     - answer.attachments.each do |a|
       - unless a.file.file.nil?
         li= link_to a.file.file.filename, a.file.url
+
   - if answer.user == current_user
     .edit-answer
       = render 'answers/form', answer: answer
+    / TODO: edit answer link bug
     = link_to 'Edit', '', id: 'edit-answer-link'
     = button_to 'Delete answer', [@question, answer], local: false, remote: true, method: :delete,
             form: { id: 'delete-answer' }
+
   - if current_user == @question.user
     .mark-as-best
       - unless answer == @best_answer
         = link_to 'Mark as best', set_best_answer_question_path(@question, best_answer_id: answer.id),
                 remote: true, method: :post
+
   - unless current_user == answer.user
     = button_to 'Like', vote_for_answer_question_answer_path(@question, answer), remote: true, params: { liked: true },
             form: { class: 'change-answer-rating' }
     = button_to 'Dislike', vote_for_answer_question_answer_path(@question, answer), remote: true,
             params: { liked: false }, form: { class: 'change-answer-rating' }
+
+  = render 'comments/comments', commentable: answer
+  = render 'comments/form', prefix: [answer.question, answer]
   p ________________________________________________
