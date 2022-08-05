@@ -1,16 +1,20 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!, only: %i[create]
+
   after_action :publish_comment, only: %i[create]
 
   def create
-    @comment = Comment.create(comment_params)
+    if user_signed_in?
+      @comment = Comment.new(comment_params)
+      @comment.user = current_user
+      @comment.save
+    end
   end
 
   private
 
   def publish_comment
-    unless @comment.errors.any?
-      ActionCable.server.broadcast("#{@comment.commentable_type.downcase}_comments", @comment)
-    end
+    ActionCable.server.broadcast("#{@comment.commentable_type.downcase}_comments", @comment) unless @comment.errors.any?
   end
 
   def comment_params

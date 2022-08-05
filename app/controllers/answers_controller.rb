@@ -1,5 +1,4 @@
 class AnswersController < ApplicationController
-
   before_action :authenticate_user!, only: %i[create destroy vote_for_answer]
   before_action :set_answer, only: %i[update destroy vote_for_answer]
 

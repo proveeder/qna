@@ -14,7 +14,6 @@ consumer.subscriptions.create({ channel: "CommentsChannel" }, {
       $(`#question-${commentable_id}`).find('.comments').append(`<div class="comment-body"><p>${text}</p></div>`)
     }
      if (type === 'answer') {
-       console.log($(`#answer-${commentable_id}`).html())
        $(`#answer-${commentable_id}`).find('.comments').append(`<div class="comment-body"><p>${text}</p></div>`)
      }
   }
