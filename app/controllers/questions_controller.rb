@@ -40,8 +40,7 @@ class QuestionsController < ApplicationController
 
   def destroy
     if @question.user == current_user
-      @question.destroy
-      redirect_to questions_path, notice: 'You deleted question successfully'
+      respond_with @question.destroy
     else
       render status: :forbidden, json: @controller.to_json
     end
@@ -51,7 +50,7 @@ class QuestionsController < ApplicationController
     if @question.user == current_user
       @best_answer = Answer.find(params[:best_answer_id])
       @question.best_answer_id = @best_answer.id
-      @question.save
+      respond_with @question.save, &:js
     else
       render status: :forbidden, json: @controller.to_json
     end
