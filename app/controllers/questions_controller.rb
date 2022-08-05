@@ -1,41 +1,38 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, only: %i[new create destroy update set_best_answer vote_for_question]
   before_action :set_question, only: %i[show delete destroy update set_best_answer vote_for_question]
+  before_action :new_answer, only: %i[show]
 
   after_action :publish_question, only: %i[create]
 
+  respond_to :html, :javascript, :json
+
   def index
-    @questions = Question.all
+    respond_with @questions = Question.all
   end
 
   def new
-    @question = Question.new
-    @question.attachments.build
+    respond_with(@question = Question.new)
   end
 
   def create
     @question = Question.new(question_params)
     @question.user = current_user
-    if @question.save
-      redirect_to @question, notice: 'Your question was created successfully'
-    else
-      render :new
-    end
+    flash[:notice] = 'Your question was created successfully' if @question.save
+    respond_with @question
   end
 
   def show
     @best_answer = Answer.find(@question.best_answer_id) unless @question.best_answer_id.nil?
-    @answer = Answer.new
-    @answer.attachments.build
-
+    respond_with @question
   end
 
   def update
-    # render partial: 'question'
     if @question.user == current_user
       @question.update(question_params)
       @question.body = question_params[:body].strip # required for jquery to be able to display it correctly
       @question.save
+      respond_with @question, &:js
     else
       render status: :forbidden, json: @controller.to_json
     end
@@ -80,6 +77,10 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def new_answer
+    @answer = Answer.new
+  end
 
   def publish_question
     unless @question.errors.any?
