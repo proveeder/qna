@@ -14,5 +14,5 @@
     br
     = button_to 'Delete question', question, method: :delete, form: { id: 'delete-question' }
   = render 'comments/comments', commentable: question
-  = render 'comments/form', prefix: [question]
+  = render 'comments/form', commentable: question
   div ________________________________________________

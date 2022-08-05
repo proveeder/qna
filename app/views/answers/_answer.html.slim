@@ -33,5 +33,5 @@
             params: { liked: false }, form: { class: 'change-answer-rating' }
 
   = render 'comments/comments', commentable: answer
-  = render 'comments/form', prefix: [answer.question, answer]
+  = render 'comments/form', commentable: answer
   p ________________________________________________

@@ -6,15 +6,13 @@ Rails.application.routes.draw do
     post :vote_for_question, on: :member
     post :set_best_answer, on: :member
 
-    resources :comments, module: :questions, only: %i[create]
-
     resources :answers, only: %i[create destroy update] do
       post :vote_for_answer, on: :member
-      resources :comments, module: :answers, only: %i[create]
     end
   end
 
   resources :attachments, only: %i[destroy]
+  resources :comments, only: %i[create]
 
   mount ActionCable.server => '/cable'
 end
