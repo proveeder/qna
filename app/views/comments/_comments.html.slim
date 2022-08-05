@@ -1,7 +1,4 @@
-h4 Comments
-- if commentable.comments.empty?
-  p No comments yet
-- else
-  - commentable.comments.each do |comment|
-    .comment-body
-      p= comment.text
+h4 Comments:
+- commentable.comments.each do |comment|
+  .comment-body
+    p= comment.text

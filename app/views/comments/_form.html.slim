@@ -1,5 +1,5 @@
 h4 Add your comment
-= form_with model: Comment.new do |f|
+= form_with model: Comment.new, local: false do |f|
   = f.label :text
   br
   = f.text_field :text

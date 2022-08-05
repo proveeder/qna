@@ -1,4 +1,4 @@
-.answer
+.answer id="answer-#{answer.id}"
   .answer-hidden-id
     p= answer.id
   .answer-body
@@ -32,6 +32,7 @@
     = button_to 'Dislike', vote_for_answer_question_answer_path(@question, answer), remote: true,
             params: { liked: false }, form: { class: 'change-answer-rating' }
 
-  = render 'comments/comments', commentable: answer
+  .comments
+    = render 'comments/comments', commentable: answer
   = render 'comments/form', commentable: answer
   p ________________________________________________
