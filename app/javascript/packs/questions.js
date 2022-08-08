@@ -15,7 +15,7 @@ document.addEventListener("turbolinks:load", function() {
     });
 
     // edit answer
-    $('#edit-answer-link').click(function(event) {
+    $('.answers').on('click', '#edit-answer-link', function(event) {
         event.preventDefault();
 
         if ($(this).text() === 'Cancel') {
