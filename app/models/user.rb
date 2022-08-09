@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
 
   def self.find_for_oauth(auth)
+    p 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
     authorization = Authorization.find_by(provider: auth.provider, uid: auth.uid.to_s)
     return authorization.user unless authorization.nil?
 
@@ -21,11 +22,26 @@ class User < ApplicationRecord
     # set temporary email if not exist
     user = User.find_by(email: email)
     unless user
+      p 'UNLESS'
       password = Devise.friendly_token[0, 20]
-      user = User.create!(email: email, password: password, password_confirmation: password)
+      user = User.create!(email: email,
+                          password: password,
+                          password_confirmation: password,
+                          active: false)
     end
+    p 'USER'
+    p user
     user&.authorizations&.create(provider: auth.provider, uid: auth.uid)
 
     user
+  end
+
+  def active_for_authentication?
+    # super && self.active
+    true
+  end
+
+  def inactive_message
+    "Sorry, this account has been deactivated."
   end
 end

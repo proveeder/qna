@@ -1,22 +1,28 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  def twitter2
-    # render json: request.env['omniauth.auth']
-    @user = User.find_for_oauth(request.env['omniauth.auth'])
+  # TODO: delete it
+  # render json: request.env['omniauth.auth']
 
-    if @user.persisted?
-      sign_in_and_redirect @user, event: :authentication
-      set_flash_message(:notice, :success, kind: 'Twitter2') if is_navigational_format?
-    else
-      flash[:notice] = 'Something went wrong, try again'
-      redirect_to new_user_session_path
-    end
+  def twitter2
+    sign_in_with_oauth('Twitter')
   end
 
   def github
+    sign_in_with_oauth('Github')
+  end
+
+  private
+
+  def sign_in_with_oauth(provider_name)
     @user = User.find_for_oauth(request.env['omniauth.auth'])
     if @user.persisted?
-      sign_in_and_redirect @user, event: :authentication
-      set_flash_message(:notice, :success, kind: 'Github') if is_navigational_format?
+      sign_in @user
+      if request.env['omniauth.auth'][:info][:email].nil?
+        flash[:notice] = 'We NEED your email'
+        redirect_to change_email_path
+      else
+        set_flash_message(:notice, :success, kind: provider_name) if is_navigational_format?
+        redirect_to root_path
+      end
     else
       flash[:notice] = 'Something went wrong, try again'
       redirect_to new_user_session_path
