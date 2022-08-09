@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :user, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+  # get '/auth/twitter2/callback', to: 'omniauth_callbacks#twitter2'
   root to: 'questions#index'
 
   resources :questions, except: %i[edit] do

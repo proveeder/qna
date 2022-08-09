@@ -275,8 +275,8 @@ Devise.setup do |config|
   config.omniauth :twitter2,
                   Rails.application.credentials.dig(:development, :twitter_client_id),
                   Rails.application.credentials.dig(:development, :twitter_client_secret),
-                  callback_path: '/auth/twitter2/callback',
-                  scope: "tweet.read users.read"
+                  callback_path: '/user/auth/twitter2/callback',
+                  scope: 'tweet.read users.read'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
