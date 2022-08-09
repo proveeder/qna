@@ -17,7 +17,8 @@ class User < ApplicationRecord
     authorization = Authorization.find_by(provider: auth.provider, uid: auth.uid.to_s)
     return authorization.user unless authorization.nil?
 
-    email = auth.info[:email]
+    email = auth.info[:email] || Devise.friendly_token[0, 6] + '@not-valid-email.com'
+    # set temporary email if not exist
     user = User.find_by(email: email)
     unless user
       password = Devise.friendly_token[0, 20]
