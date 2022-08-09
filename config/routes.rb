@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :user, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
   root to: 'questions#index'
 
   resources :questions, except: %i[edit] do

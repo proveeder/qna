@@ -35,6 +35,11 @@ gem 'slim-rails'
 # AUTH
 gem 'devise'
 
+# OAUTH
+gem 'omniauth'
+gem 'omniauth-rails_csrf_protection'
+gem 'omniauth-twitter2'
+
 # FILES
 gem 'carrierwave'
 gem 'cocoon'
