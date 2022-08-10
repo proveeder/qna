@@ -1,16 +1,13 @@
 class UserActivationsController < ApplicationController
-  before_action :authenticate_user!
-
   def change_email
     render 'activations/change_email'
   end
 
   def update_email
     user = current_user
-    p user
     user.email = params[:updated][:email]
     if user.save(validate: false)
-      UserMailer.with(user: user).update_email.deliver_later
+      # UserMailer.with(user: user).update_email.deliver_later
       flash[:notice] = 'Check your email'
     else
       flash[:notice] = user.errors

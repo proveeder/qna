@@ -18,7 +18,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in @user
       if request.env['omniauth.auth'][:info][:email].nil?
         flash[:notice] = 'We NEED your email'
-        redirect_to change_email_path
+        @user.active == false ? (redirect_to change_email_path) : (redirect_to root_path)
       else
         set_flash_message(:notice, :success, kind: provider_name) if is_navigational_format?
         redirect_to root_path
