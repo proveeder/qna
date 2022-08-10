@@ -16,7 +16,6 @@ Rails.application.routes.draw do
   resources :comments, only: %i[create]
 
   get '/change_email', to: 'user_activations#change_email'
-  get '/activate_user', to: 'user_activations#activate_user'
   post '/update_email', to: 'user_activations#update_email'
 
   mount ActionCable.server => '/cable'

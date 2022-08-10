@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  skip_before_action :check_email_activation, only: %i[index show]
   before_action :authenticate_user!, only: %i[new create destroy update set_best_answer vote_for_question]
   before_action :set_question, only: %i[show delete destroy update set_best_answer vote_for_question]
   before_action :new_answer, only: %i[show]

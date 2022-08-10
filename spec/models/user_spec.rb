@@ -7,6 +7,8 @@ RSpec.describe User, type: :model do
   it { should have_many(:questions).dependent(:nullify) }
   it { should have_many(:answers).dependent(:nullify) }
   it { should have_many(:comments).dependent(:destroy) }
+  it { should have_many(:user_answer_votes).dependent(:destroy) }
+  it { should have_many(:user_question_votes).dependent(:destroy) }
 
   describe '.find_for_oauth' do
     let!(:user) { create(:user) }
@@ -44,7 +46,9 @@ RSpec.describe User, type: :model do
       end
 
       context 'user does not exist' do
-        let(:auth) { OmniAuth::AuthHash.new(provider: 'twitter2', uid: '123456', info: { email: 'new_user@email.org' }) }
+        let(:auth) do
+          OmniAuth::AuthHash.new(provider: 'twitter2', uid: '123456', info: { email: 'new_user@email.org' })
+        end
 
         it 'creates new user' do
           expect { User.find_for_oauth(auth) }.to change(User, :count).by(1)
