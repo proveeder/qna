@@ -1,6 +1,5 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # TODO: delete it
-  # render json: request.env['omniauth.auth']
 
   def twitter2
     sign_in_with_oauth('Twitter')
@@ -14,6 +13,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def sign_in_with_oauth(provider_name)
     @user = User.find_for_oauth(request.env['omniauth.auth'])
+    p request.env['omniauth.auth'][:info]
     if @user.persisted?
       sign_in @user
       if request.env['omniauth.auth'][:info][:email].nil? && @user.unconfirmed_email&.present?

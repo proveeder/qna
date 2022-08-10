@@ -1,3 +1,5 @@
 = form_with url: update_email_path, scope: :updated do |f|
+  = f.label :email, 'Your email'
+  br
   = f.email_field :email
   = f.submit 'Update'
