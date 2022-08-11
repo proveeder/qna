@@ -2,6 +2,8 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy vote_for_answer]
   before_action :set_answer, only: %i[update destroy vote_for_answer]
 
+  authorize_resource
+
   def create
     @answer = Answer.create(answer_params)
     @answer.question_id = params[:question_id]
@@ -11,19 +13,11 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if @answer.user == current_user
-      @answer.update(answer_params)
-    else
-      render status: :forbidden, json: @controller.to_json
-    end
+    @answer.update(answer_params)
   end
 
   def destroy
-    if @answer.user == current_user
-      @answer.destroy
-    else
-      render status: :forbidden, json: @controller.to_json
-    end
+    @answer.destroy
   end
 
   def vote_for_answer

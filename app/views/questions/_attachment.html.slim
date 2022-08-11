@@ -1,5 +1,5 @@
 - question.attachments.each do |a|
   .attachment
     li= link_to a.file.identifier, a.file.url
-    - if question.user == current_user
+    - if can? :delete, a
       = button_to 'Delete file', a, method: :delete, local: false, remote: true

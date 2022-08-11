@@ -1,4 +1,5 @@
 class UserActivationsController < ApplicationController
+  skip_authorization_check
   skip_before_action :check_email_activation
 
   def change_email

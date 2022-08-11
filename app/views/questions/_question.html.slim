@@ -6,7 +6,7 @@
   ol
     .attachments
       = render 'attachment', question: question
-  - if question.user == current_user
+  - if can? :edit, question
     .edit-question
       = render 'form', submit_text: 'Update'
     br

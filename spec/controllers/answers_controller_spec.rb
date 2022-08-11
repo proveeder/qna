@@ -80,9 +80,9 @@ RSpec.describe AnswersController, type: :controller do
         expect(answer.body).to eq old_body
       end
 
-      it 'receives 403 status code' do
+      it 'receives 302 status code' do
         patch :update, params: { question_id: answer.question, id: answer, answer: { body: 'New body' } }
-        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:forbidden])
+        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:found])
       end
     end
 
@@ -115,9 +115,9 @@ RSpec.describe AnswersController, type: :controller do
         end.to_not change(Answer, :count)
       end
 
-      it 'receives 403 status code' do
+      it 'receives 302 status code' do
         delete :destroy, params: { question_id: answer.question, id: answer }
-        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:forbidden])
+        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:found])
       end
     end
   end
@@ -131,9 +131,9 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'author of answer tries to change answer rating' do
-      it 'receives 403 status code' do
+      it 'receives 302 status code' do
         post :vote_for_answer, params: { question_id: answer.question, id: answer, liked: true }, format: :json
-        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:forbidden])
+        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:found])
       end
     end
 

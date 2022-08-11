@@ -106,9 +106,9 @@ RSpec.describe QuestionsController, type: :controller do
         expect(question.body).to eq old_body
       end
 
-      it 'receives 403 status code' do
+      it 'receives 302 status code' do
         patch :update, params: { id: question, question: { body: 'New body' } }
-        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:forbidden])
+        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:found])
       end
     end
 
@@ -147,9 +147,9 @@ RSpec.describe QuestionsController, type: :controller do
         expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
       end
 
-      it 'receives 403 status code' do
+      it 'receives 302 status code' do
         delete :destroy, params: { id: question }
-        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:forbidden])
+        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:found])
       end
     end
 
@@ -192,9 +192,9 @@ RSpec.describe QuestionsController, type: :controller do
         expect(assigns(:question)).to eq answer.question
       end
 
-      it 'receives 403 status code' do
+      it 'receives 302 status code' do
         post :set_best_answer, params: { id: answer.question, best_answer_id: answer }
-        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:forbidden])
+        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:found])
       end
     end
 

@@ -31,32 +31,20 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if @question.user == current_user
-      @question.update(question_params)
-      @question.body = question_params[:body].strip # required for jquery to be able to display it correctly
-      @question.save
-      respond_with @question, &:js
-    else
-      render status: :forbidden, json: @controller.to_json
-    end
+    @question.update(question_params)
+    @question.body = question_params[:body].strip # required for jquery to be able to display it correctly
+    @question.save
+    respond_with @question, &:js
   end
 
   def destroy
-    if @question.user == current_user
-      respond_with @question.destroy
-    else
-      render status: :forbidden, json: @controller.to_json
-    end
+    respond_with @question.destroy
   end
 
   def set_best_answer
-    if @question.user == current_user
-      @best_answer = Answer.find(params[:best_answer_id])
-      @question.best_answer_id = @best_answer.id
-      respond_with @question.save, &:js
-    else
-      render status: :forbidden, json: @controller.to_json
-    end
+    @best_answer = Answer.find(params[:best_answer_id])
+    @question.best_answer_id = @best_answer.id
+    respond_with @question.save, &:js
   end
 
   def vote_for_question

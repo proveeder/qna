@@ -1,5 +1,5 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  # TODO: delete it
+  skip_authorization_check
 
   def twitter2
     sign_in_with_oauth('Twitter')

@@ -3,12 +3,12 @@ class CommentsController < ApplicationController
 
   after_action :publish_comment, only: %i[create]
 
+  authorize_resource
+
   def create
-    if user_signed_in?
-      @comment = Comment.new(comment_params)
-      @comment.user = current_user
-      @comment.save
-    end
+    @comment = Comment.new(comment_params)
+    @comment.user = current_user
+    @comment.save
   end
 
   private

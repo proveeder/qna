@@ -1,8 +1,8 @@
 class AttachmentsController < ApplicationController
+  authorize_resource
+
   def destroy
     @attachment = Attachment.find(params[:id])
-    if @attachment.attachable.user == current_user
-      @attachment.destroy
-    end
+    @attachment.destroy
   end
 end
