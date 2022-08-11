@@ -43,6 +43,8 @@ gem 'omniauth-github', github: 'omniauth/omniauth-github', branch: 'master'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-twitter2'
 
+gem 'doorkeeper'
+
 # FILES
 gem 'carrierwave'
 gem 'cocoon'

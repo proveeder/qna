@@ -1,7 +1,16 @@
 Rails.application.routes.draw do
+  use_doorkeeper
   devise_for :user, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
   root to: 'questions#index'
+
+  namespace :api do
+    namespace :v1 do
+      resource :profiles do
+        get :me, on: :collection
+      end
+    end
+  end
 
   resources :questions, except: %i[edit] do
     post :vote_for_question, on: :member

@@ -40,15 +40,4 @@ class User < ApplicationRecord
     user&.authorizations&.create(provider: auth.provider, uid: auth.uid)
     user
   end
-
-  # def active_for_authentication?
-  #   providers = []
-  #   authorizations.each { |a| providers << a.provider }
-  #   # check if user provider not gives us email so we have to give user ability to change it and then activate user
-  #   (providers & REQUIRE_EMAIL_CHANGE_PROVIDERS).any? && confirmed? == false ? true : super && confirmed?
-  # end
-  #
-  # def inactive_message
-  #   'Sorry, this account has been deactivated.'
-  # end
 end
