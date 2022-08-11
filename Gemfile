@@ -35,11 +35,13 @@ gem 'slim-rails'
 # AUTH
 gem 'devise'
 
+gem 'cancancan'
+
 # OAUTH
 gem 'omniauth'
+gem 'omniauth-github', github: 'omniauth/omniauth-github', branch: 'master'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-twitter2'
-gem 'omniauth-github', github: 'omniauth/omniauth-github', branch: 'master'
 
 # FILES
 gem 'carrierwave'
@@ -73,12 +75,12 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 3.26'
+  gem 'capybara-email'
   gem 'capybara-webkit', github: 'thoughtbot/capybara-webkit', branch: 'master'
   gem 'database_cleaner'
   gem 'launchy'
   gem 'shoulda-matchers'
   gem 'webdrivers'
-  gem 'capybara-email'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
