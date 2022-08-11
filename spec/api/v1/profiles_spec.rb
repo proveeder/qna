@@ -13,5 +13,16 @@ describe 'Profile API' do
         expect(response.status).to eq 401
       end
     end
+
+    context 'authorized' do
+      let(:me) { create :user }
+      let(:token) { create(:access_token) }
+
+      before { get '/api/v1/profiles/me', headers: { 'Authorization': "Bearer #{token.token}" } }
+
+      it 'returns 200 status code' do
+        expect(response.status).to eq 200
+      end
+    end
   end
 end

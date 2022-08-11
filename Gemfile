@@ -83,6 +83,7 @@ group :test do
   gem 'launchy'
   gem 'shoulda-matchers'
   gem 'webdrivers'
+  gem 'json_spec'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
