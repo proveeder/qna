@@ -1,3 +1,5 @@
+require 'doorkeeper/orm/active_record/application'
+
 FactoryBot.define do
   factory :oauth_application, class: Doorkeeper::Application do
     name { 'TestApp' }

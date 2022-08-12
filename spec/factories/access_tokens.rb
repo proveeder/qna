@@ -1,3 +1,5 @@
+require 'doorkeeper/orm/active_record/access_token'
+
 FactoryBot.define do
   factory :access_token, class: Doorkeeper::AccessToken do
     application { create(:oauth_application) }
