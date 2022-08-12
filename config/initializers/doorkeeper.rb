@@ -16,8 +16,7 @@ Doorkeeper.configure do
   # every time somebody will try to access the admin web interface.
 
   admin_authenticator do
-    # flash[:alert] = 'You are not allowed to do that'
-    # redirect_to root_path unless current_user.admin
+    current_user.try(:admin) || redirect_to(new_user_session_path)
   end
 
   # You can use your own model classes if you need to extend (or even override) default

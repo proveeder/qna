@@ -49,6 +49,7 @@ gem 'doorkeeper'
 gem 'carrierwave'
 gem 'cocoon'
 
+gem 'active_model_serializers'
 gem 'responders'
 
 group :development, :test do
@@ -80,10 +81,10 @@ group :test do
   gem 'capybara-email'
   gem 'capybara-webkit', github: 'thoughtbot/capybara-webkit', branch: 'master'
   gem 'database_cleaner'
+  gem 'json_spec'
   gem 'launchy'
   gem 'shoulda-matchers'
   gem 'webdrivers'
-  gem 'json_spec'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
