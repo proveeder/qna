@@ -6,11 +6,17 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resource :profiles do
-        get :me, on: :collection
+      resource :profiles, only: [] do
+        get :me
       end
-      resource :questions do
-        get :index, on: :collection
+      resource :questions, only: [] do
+        get :index
+        post :create
+        get ':id', action: 'show'
+
+        get ':question_id/answers', to: 'answers#index'
+        post ':question_id/answers', action: 'create'
+        get ':question_id/answers/:id', to: 'answers#show'
       end
     end
   end
