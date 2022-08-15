@@ -1,13 +1,13 @@
 // required to work with turbolinks
 document.addEventListener("turbolinks:load", function() {
-    // change ration on index questions page
+    // change rating on index questions page
     $(".change-answer-rating").on('ajax:complete', function(e) {
         let data = JSON.parse(e['detail'][0]['response']);
         let rating = data['rating']
         $(this).parent().find('p:contains("Rating:")').html(`Rating: ${rating}`)
     });
 
-    // change ration on index questions page
+    // change rating on index questions page
     $(".change-question-rating").on('ajax:complete', function(e) {
         let data = JSON.parse(e['detail'][0]['response']);
         let rating = data['rating']

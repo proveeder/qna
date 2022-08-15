@@ -1,4 +1,9 @@
 <% unless @answer.errors.present? %>
   $('p:contains("<%= @answer.id %>")').parent().parent().remove()
-  $('#create-answer-form').show()
+  if($('#create-answer-form').length) {
+    $('#create-answer-form').show();
+  } else {
+    $('.all-answers').parent().append(`<%= render 'create_answer_form', question: @answer.question, answer: @answer %>`)
+    $('#answer_body').text('');
+  }
 <% end %>

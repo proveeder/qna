@@ -7,16 +7,6 @@
 
     - if user_signed_in?
       - if @question.answers.to_a.intersection(current_user.answers).empty?
-        = form_with model: [@question, @answer], local: false, html: { id: 'create-answer-form' } do |f|
-          = f.label :body, 'Your answer'
-          br
-          = f.text_area :body
-          #answer-errors
-          br
-            = f.fields_for :attachments, @answer.attachments.build do |a|
-              = a.label :file
-              = a.file_field :file
-          br
-          = f.submit 'Add answer'
+        = render 'answers/create_answer_form', question: @question, answer: @answer
     - else
       p You need to sign in or sign up before continuing.
