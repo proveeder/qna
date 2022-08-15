@@ -72,9 +72,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'author update question' do
       before do
-        # devise stuff
-        allow(controller).to receive(:authenticate_user!).and_return(true)
-        allow(controller).to receive(:current_user).and_return(question.user)
+        authenticate_by_devise(question.user)
       end
 
       it 'Assigns requested question to @question' do
@@ -166,9 +164,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'author set best answer' do
       before do
-        # devise stuff
-        allow(controller).to receive(:authenticate_user!).and_return(true)
-        allow(controller).to receive(:current_user).and_return(answer.question.user)
+        authenticate_by_devise(answer.question.user)
       end
 
       it 'Assigns requested question to @question' do
@@ -210,8 +206,7 @@ RSpec.describe QuestionsController, type: :controller do
     let(:question) { create(:question) }
 
     before do
-      allow(controller).to receive(:authenticate_user!).and_return(true)
-      allow(controller).to receive(:current_user).and_return(question.user)
+      authenticate_by_devise(question.user)
     end
 
     context 'anyone changes answer rating' do
@@ -228,5 +223,12 @@ RSpec.describe QuestionsController, type: :controller do
         expect(JSON.parse(response.body)['rating']).to match(1)
       end
     end
+  end
+
+  private
+
+  def authenticate_by_devise(user)
+    allow(controller).to receive(:authenticate_user!).and_return(true)
+    allow(controller).to receive(:current_user).and_return(user)
   end
 end

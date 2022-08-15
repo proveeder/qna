@@ -29,8 +29,7 @@ RSpec.describe AnswersController, type: :controller do
     let(:answer) { create(:answer) }
 
     before do
-      allow(controller).to receive(:authenticate_user!).and_return(true)
-      allow(controller).to receive(:current_user).and_return(answer.user)
+      authenticate_by_devise(answer.user)
     end
 
     context 'author edit answer with valid data' do
@@ -93,8 +92,7 @@ RSpec.describe AnswersController, type: :controller do
     let(:answer) { create(:answer) }
 
     before do
-      allow(controller).to receive(:authenticate_user!).and_return(true)
-      allow(controller).to receive(:current_user).and_return(answer.user)
+      authenticate_by_devise(answer.user)
     end
 
     context 'author delete answer' do
@@ -126,8 +124,7 @@ RSpec.describe AnswersController, type: :controller do
     let(:answer) { create(:answer) }
 
     before do
-      allow(controller).to receive(:authenticate_user!).and_return(true)
-      allow(controller).to receive(:current_user).and_return(answer.user)
+      authenticate_by_devise(answer.user)
     end
 
     context 'author of answer tries to change answer rating' do
@@ -151,5 +148,12 @@ RSpec.describe AnswersController, type: :controller do
         expect(JSON.parse(response.body)['rating']).to match(1)
       end
     end
+  end
+
+  private
+
+  def authenticate_by_devise(user)
+    allow(controller).to receive(:authenticate_user!).and_return(true)
+    allow(controller).to receive(:current_user).and_return(user)
   end
 end

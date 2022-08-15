@@ -132,7 +132,6 @@ describe 'Questions API' do
       end
 
       it 'returns 200 status code' do
-        p response.body
         expect(response.status).to eq 200
       end
 
