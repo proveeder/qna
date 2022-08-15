@@ -1,17 +1,8 @@
 require 'rails_helper'
 
 describe 'Questions API' do
-  describe 'unauthorized' do
-    it 'returns 401 status if there is no access_token' do
-      get '/api/v1/questions'
-      expect(response.status).to eq 401
-    end
-
-    it 'returns 401 status if access_token is invalid' do
-      get '/api/v1/questions', params: { access_token: '1234' }
-      expect(response.status).to eq 401
-    end
-  end
+  let(:do_request) { get '/api/v1/questions' }
+  it_behaves_like 'API authenticable'
 
   let(:token) { create(:access_token) }
 
@@ -171,5 +162,9 @@ describe 'Questions API' do
     context 'POST /questions'
 
     context 'POST /questions/:question_id/answers'
+  end
+
+  def do_request(params = {})
+    get '/api/v1/questions', params
   end
 end
