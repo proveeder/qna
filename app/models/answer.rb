@@ -18,7 +18,9 @@ class Answer < ApplicationRecord
   private
 
   def send_notification
-    NotificationMailer.with(question: self.question).new_answer_notification.deliver_later
+    UpdateQuestionNotification.where(question_id: question.id).find_each.each do |subscription|
+      NotificationMailer.with(question: question, user_id: subscription.user_id).new_answer_notification.deliver_later
+    end
   end
 
   def nullify_best_answer
