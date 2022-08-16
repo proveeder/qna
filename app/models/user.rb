@@ -15,6 +15,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :user_answer_votes, dependent: :destroy
   has_many :user_question_votes, dependent: :destroy
+  has_many :update_question_notifications, dependent: :destroy
 
   def self.find_for_oauth(auth)
     authorization = Authorization.find_by(provider: auth.provider, uid: auth.uid.to_s)

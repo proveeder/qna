@@ -1,0 +1,2 @@
+class UpdateQuestionNotification < ApplicationRecord
+end

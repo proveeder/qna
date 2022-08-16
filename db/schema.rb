@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_11_142758) do
+ActiveRecord::Schema.define(version: 2022_08_16_105519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,7 +105,20 @@ ActiveRecord::Schema.define(version: 2022_08_11_142758) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id"
     t.integer "best_answer_id"
+    t.bigint "question_id"
+    t.bigint "question_id_id"
+    t.index ["question_id"], name: "index_questions_on_question_id"
+    t.index ["question_id_id"], name: "index_questions_on_question_id_id"
     t.index ["user_id"], name: "index_questions_on_user_id"
+  end
+
+  create_table "update_question_notifications", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "question_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_update_question_notifications_on_question_id"
+    t.index ["user_id"], name: "index_update_question_notifications_on_user_id"
   end
 
   create_table "user_answer_votes", force: :cascade do |t|
@@ -143,9 +156,13 @@ ActiveRecord::Schema.define(version: 2022_08_11_142758) do
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
     t.boolean "admin", default: false
+    t.bigint "user_id"
+    t.bigint "user_id_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["user_id"], name: "index_users_on_user_id"
+    t.index ["user_id_id"], name: "index_users_on_user_id_id"
   end
 
   add_foreign_key "comments", "users"

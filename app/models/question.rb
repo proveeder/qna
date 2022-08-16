@@ -3,7 +3,9 @@ class Question < ApplicationRecord
   validates :body, presence: true, allow_blank: false
 
   belongs_to :user
+
   has_many :answers, dependent: :destroy
+  has_many :update_question_notifications, dependent: :destroy
   has_many :attachments, as: :attachable, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy
 

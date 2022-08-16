@@ -9,6 +9,7 @@ RSpec.describe User, type: :model do
   it { should have_many(:comments).dependent(:destroy) }
   it { should have_many(:user_answer_votes).dependent(:destroy) }
   it { should have_many(:user_question_votes).dependent(:destroy) }
+  it { should have_many(:update_question_notifications).dependent(:destroy) }
 
   describe '.find_for_oauth' do
     let!(:user) { create(:user) }
