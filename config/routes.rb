@@ -38,6 +38,7 @@ Rails.application.routes.draw do
 
   resources :attachments, only: %i[destroy]
   resources :comments, only: %i[create]
+  resources :update_question_notification, only: %i[create destroy]
 
   get '/change_email', to: 'user_activations#change_email'
   post '/update_email', to: 'user_activations#update_email'

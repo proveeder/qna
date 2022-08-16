@@ -15,7 +15,7 @@ RSpec.describe Answer, type: :model do
 
   it { should_not allow_value('').for(:body) }
 
-  describe 'checks scoped uniqueness' do
+  describe 'with real object' do
     subject { build(:answer) }
     it { should validate_uniqueness_of(:user_id).scoped_to(:question_id) }
   end

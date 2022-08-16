@@ -19,9 +19,11 @@ class Ability
 
   def user_abilities
     guest_abilities
-    can :create, [Question, Answer, Comment, Attachment]
+    can :create, [Question, Answer, Comment, Attachment, UpdateQuestionNotification]
     can :update, [Question, Answer], user: user
     can :destroy, [Question, Answer, Attachment], user: @user
+    # TODO: refactor model
+    can :destroy, UpdateQuestionNotification, user_id: @user.id
 
     can :set_best_answer, Question, user: @user
 

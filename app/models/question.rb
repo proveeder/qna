@@ -16,7 +16,7 @@ class Question < ApplicationRecord
   private
 
   def subscribe_to_question_updates
-    subscription = UpdateQuestionNotification.create(user_id: user, question_id: self)
+    subscription = UpdateQuestionNotification.create(user_id: user.id, question_id: self.id)
     subscription.save!
   end
 end

@@ -13,6 +13,11 @@
     = link_to 'Edit question', '', id: 'edit-q-link'
     br
     = button_to 'Delete question', question, method: :delete, form: { id: 'delete-question' }
+  - if user_signed_in?
+    - if UpdateQuestionNotification.where(user_id: current_user, question_id: question).exists?
+      = button_to 'Unsubscribe', update_question_notification_path(question.id), method: :delete
+    - else
+      = button_to 'Subscribe', update_question_notification_index_path, params: { id: question.id }
   .comments
     = render 'comments/comments', commentable: question
   = render 'comments/form', commentable: question

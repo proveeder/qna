@@ -31,6 +31,7 @@ describe Ability do
     it { should be_able_to :create, Answer }
     it { should be_able_to :create, Comment }
     it { should be_able_to :create, Attachment }
+    it { should be_able_to :create, UpdateQuestionNotification }
 
     # able to update self-created question
     it { should be_able_to :update, create(:question, user: user), user: user }
@@ -49,5 +50,8 @@ describe Ability do
 
     it { should be_able_to :vote_for_answer, create(:answer, user: other_user), user: user }
     it { should_not be_able_to :vote_for_answer, create(:answer, user: user), user: user }
+
+    it { should be_able_to :destroy, create(:update_question_notification, user_id: user.id), user_id: user.id }
+    it { should_not be_able_to :destroy, create(:update_question_notification, user_id: other_user.id), user_id: user }
   end
 end
