@@ -10,4 +10,13 @@ class Question < ApplicationRecord
   has_many :comments, as: :commentable, dependent: :destroy
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
+
+  after_create :subscribe_to_question_updates
+
+  private
+
+  def subscribe_to_question_updates
+    subscription = UpdateQuestionNotification.create(user_id: user, question_id: self)
+    subscription.save!
+  end
 end

@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'sidekiq/testing'
 
-Sidekiq::Testing.inline!
+Sidekiq::Testing.fake!
 
 ENV['RAILS_ENV'] ||= 'test'
 

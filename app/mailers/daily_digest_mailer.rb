@@ -1,4 +1,4 @@
-class DailyMailer < ApplicationMailer
+class DailyDigestMailer < ApplicationMailer
   def daily_digest
     @user = params[:user]
     @questions = Question.where('created_at >= ?', 1.days.ago)
