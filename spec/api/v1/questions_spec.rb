@@ -183,9 +183,9 @@ describe 'Questions API' do
       end
     end
 
-    context 'POST /questions'
+    # context 'POST /questions'
 
-    context 'POST /questions/:question_id/answers'
+    # context 'POST /questions/:question_id/answers'
   end
 
   def do_request(params = {})
