@@ -49,21 +49,16 @@ describe 'Questions API' do
     end
 
     context 'GET /questions/:id' do
+      let(:question) { create(:question_with_file) }
       let(:comments) do
         create_list(:comment, 2, commentable_type: question.class.to_s,
                                  commentable_id: question.id,
                                  user_id: question.user.id)
       end
       let!(:comment) { comments.first }
-
-
-      # TODO: DO FOR FILES
-      # let(:attachment) do
-      #   create(:attachment, attachable_id: question.id, attachable_type: question.class.to_s)
-      # end
+      let!(:attachment) { question.attachments.first }
 
       before do
-
         get "/api/v1/questions/#{question.id}", headers: { 'Authorization': "Bearer #{token.token}" }, as: :json
       end
 
@@ -92,6 +87,22 @@ describe 'Questions API' do
           end
         end
       end
+
+      it 'contains attachments object' do
+        expect(response.body).to be_json_eql(question.attachments.to_json).at_path('attachments')
+      end
+
+      context 'attachments' do
+        %w[file created_at updated_at attachable_id attachable_type].each do |attr|
+          it "object contains #{attr}" do
+            expect(response.body).to be_json_eql(attachment.send(attr.to_sym).to_json).at_path("attachments/0/#{attr}")
+          end
+        end
+
+        it 'contains url to file' do
+          expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path('attachments/0/file/url')
+        end
+      end
     end
 
     context 'GET /questions/:question_id/answers' do
@@ -115,17 +126,14 @@ describe 'Questions API' do
     end
 
     context 'GET /questions/:question_id/answers/:id' do
+      let(:answer) { create(:answer_with_file) }
       let(:comments) do
         create_list(:comment, 2, commentable_type: answer.class.to_s,
-                    commentable_id: answer.id,
-                    user_id: answer.user.id)
+                                 commentable_id: answer.id,
+                                 user_id: answer.user.id)
       end
       let!(:comment) { comments.first }
-
-      # TODO: DO FOR FILES
-      # let(:attachment) do
-      #   create(:attachment, attachable_id: question.id, attachable_type: question.class.to_s)
-      # end
+      let!(:attachment) { answer.attachments.first }
 
       before do
         get "/api/v1/questions/#{answer.question.id}/answers/#{answer.id}",
@@ -155,6 +163,22 @@ describe 'Questions API' do
           it "object contains #{attr}" do
             expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json).at_path("comments/0/#{attr}")
           end
+        end
+      end
+
+      it 'contains attachments object' do
+        expect(response.body).to be_json_eql(answer.attachments.to_json).at_path('attachments')
+      end
+
+      context 'attachments' do
+        %w[file created_at updated_at attachable_id attachable_type].each do |attr|
+          it "object contains #{attr}" do
+            expect(response.body).to be_json_eql(attachment.send(attr.to_sym).to_json).at_path("attachments/0/#{attr}")
+          end
+        end
+
+        it 'contains url to file' do
+          expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path('attachments/0/file/url')
         end
       end
     end
