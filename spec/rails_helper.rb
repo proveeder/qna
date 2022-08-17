@@ -89,6 +89,10 @@ RSpec.configure do |config|
     OmniAuth.config.mock_auth[:twitter2] = nil
     OmniAuth.config.mock_auth[:github] = nil
   end
+
+  config.after(:all) do
+    FileUtils.rm_rf(Dir["#{Rails.root}/public/uploads/test"]) if Rails.env.test? || Rails.env.cucumber?
+  end
 end
 
 # RSPEC integration
@@ -100,3 +104,23 @@ Shoulda::Matchers.configure do |config|
 end
 
 OmniAuth.config.test_mode = true
+
+# change destination where files will be uploaded
+if Rails.env.test? || Rails.env.cucumber?
+  # make sure uploader is auto-loaded
+  FileUploader
+
+  CarrierWave::Uploader::Base.descendants.each do |klass|
+    next if klass.anonymous?
+
+    klass.class_eval do
+      def cache_dir
+        "#{Rails.root}/public/uploads/tmp"
+      end
+
+      def store_dir
+        "#{Rails.root}/public/uploads/test/#{model.class.to_s.underscore}/#{model.id}"
+      end
+    end
+  end
+end

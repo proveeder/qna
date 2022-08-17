@@ -63,6 +63,7 @@ describe 'Questions API' do
       # end
 
       before do
+
         get "/api/v1/questions/#{question.id}", headers: { 'Authorization': "Bearer #{token.token}" }, as: :json
       end
 
