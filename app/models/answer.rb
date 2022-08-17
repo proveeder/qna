@@ -15,13 +15,13 @@ class Answer < ApplicationRecord
   after_create :send_notification
   before_destroy :nullify_best_answer
 
-  private
-
   def send_notification
     UpdateQuestionNotification.where(question_id: question.id).find_each.each do |subscription|
       NotificationMailer.with(question: question, user_id: subscription.user_id).new_answer_notification.deliver_later
     end
   end
+
+  private
 
   def nullify_best_answer
     if question.best_answer_id == id

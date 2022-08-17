@@ -78,4 +78,13 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '.send_daily_digest' do
+    let(:users) { create_list(:user, 2) }
+
+    it 'should send daily digest to all users' do
+      users.each { |user| allow(DailyDigestMailer).to receive(:daily_digest).with(user).and_call_original }
+      DailyDigestJob.perform_now
+    end
+  end
 end

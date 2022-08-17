@@ -19,4 +19,17 @@ RSpec.describe Answer, type: :model do
     subject { build(:answer) }
     it { should validate_uniqueness_of(:user_id).scoped_to(:question_id) }
   end
+
+  describe 'subscription' do
+    let(:subscriptions) { create_list(:update_question_notification, 2, question_id: answer.question.id) }
+    let(:answer) { create(:answer) }
+
+    it 'sends notification to all subscribers when answer creates' do
+      subscriptions.each do |s|
+        allow(NotificationMailer).to receive(:new_answer_notification).with(question: s.question_id,
+                                                                             user_id: s.user_id).and_call_original
+      end
+      answer.send_notification
+    end
+  end
 end

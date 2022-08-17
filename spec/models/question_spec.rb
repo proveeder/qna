@@ -15,4 +15,12 @@ RSpec.describe Question, type: :model do
 
   it { should_not allow_value('').for(:title) }
   it { should_not allow_value('').for(:body) }
+
+  describe 'subscription' do
+    subject { build(:question) }
+
+    it 'should create subscription after creating' do
+      expect { subject.save }.to change(UpdateQuestionNotification, :count).by(1)
+    end
+  end
 end
