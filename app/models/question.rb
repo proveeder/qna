@@ -13,10 +13,12 @@ class Question < ApplicationRecord
 
   after_create :subscribe_to_question_updates
 
+  after_save ThinkingSphinx::RealTime.callback_for(:question)
+
   private
 
   def subscribe_to_question_updates
-    subscription = UpdateQuestionNotification.create(user_id: user.id, question_id: self.id)
+    subscription = UpdateQuestionNotification.create(user_id: user.id, question_id: id)
     subscription.save
   end
 end
