@@ -17,6 +17,8 @@ class User < ApplicationRecord
   has_many :user_question_votes, dependent: :destroy
   has_many :update_question_notifications, dependent: :destroy
 
+  after_save ThinkingSphinx::RealTime.callback_for(:user)
+
   def self.find_for_oauth(auth)
     authorization = Authorization.find_by(provider: auth.provider, uid: auth.uid.to_s)
     return authorization.user unless authorization.nil?

@@ -42,6 +42,7 @@ Rails.application.routes.draw do
 
   get '/change_email', to: 'user_activations#change_email'
   post '/update_email', to: 'user_activations#update_email'
+  get '/search', to: 'search#search'
 
   mount ActionCable.server => '/cable'
 end

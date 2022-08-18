@@ -6,4 +6,6 @@ class Comment < ApplicationRecord
 
   belongs_to :commentable, polymorphic: true
   belongs_to :user
+
+  after_save ThinkingSphinx::RealTime.callback_for(:comment)
 end

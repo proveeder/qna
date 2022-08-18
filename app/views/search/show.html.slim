@@ -1,0 +1,13 @@
+- @result.each do |result|
+  - case result.class.name
+  - when 'User'
+    p= result.email
+  - when 'Question'
+    = link_to result.title.truncate(10), result
+  - when 'Answer'
+    = link_to result.body.truncate(10), result.question
+  - when 'Comment'
+    = link_to result.text.truncate(10), result.commentable
+  - else
+    p Can't understand this result
+  br

@@ -13,6 +13,7 @@ class Answer < ApplicationRecord
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
   after_create :send_notification
+  after_save ThinkingSphinx::RealTime.callback_for(:answer)
   before_destroy :nullify_best_answer
 
   def send_notification
