@@ -1,5 +1,6 @@
 require 'acceptance/acceptance_helper'
 
+# only one written cause they are too similar, I figured out how to run them at all!
 feature 'Search for specific question', '
   In order to find more relevant information
   As any one

@@ -3,11 +3,12 @@
   - when 'User'
     p= result.email
   - when 'Question'
-    = link_to result.title.truncate(10), result
+    = link_to result.title.truncate(20), result
   - when 'Answer'
-    = link_to result.body.truncate(10), result.question
+    = link_to result.body.truncate(20), result.question
   - when 'Comment'
-    = link_to result.text.truncate(10), result.commentable
+    - parent = result.commentable
+    = link_to result.text.truncate(15), (parent.class.name == 'Question' ? parent : parent.question )
   - else
     p Can't understand this result
   br
