@@ -38,3 +38,5 @@ yarn-debug.log*
 .yarn-integrity
 
 /public/uploads/
+/config/*.sphinx.conf
+/db/sphinx

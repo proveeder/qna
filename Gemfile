@@ -59,6 +59,11 @@ gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', require: nil
 gem 'whenever'
 
+# SPHINX SEARCH
+gem 'jdbc-mysql',      '~> 5.1.35', platform: :jruby
+gem 'mysql2',          '~> 0.4',    platform: :ruby
+gem 'thinking-sphinx', '~> 5.4'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
