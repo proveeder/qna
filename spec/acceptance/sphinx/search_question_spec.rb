@@ -1,10 +1,5 @@
 require 'acceptance/acceptance_helper'
 
-RSpec.configure do |config|
-  ThinkingSphinx::Test.init
-  ThinkingSphinx::Test.start index: false
-end
-
 feature 'Search for specific question', '
   In order to find more relevant information
   As any one
@@ -14,8 +9,6 @@ feature 'Search for specific question', '
   given(:question) { create(:question) }
 
   scenario 'User search for question', sphinx: true do
-    # init_thinking_sphinx
-
     visit root_path
 
     fill_in 'Text to search', with: question.title
@@ -24,4 +17,3 @@ feature 'Search for specific question', '
     expect(page).to have_link question.title
   end
 end
-
