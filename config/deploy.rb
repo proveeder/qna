@@ -19,26 +19,10 @@ append :linked_files, 'config/database.yml', 'config/master.key', '.env'
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'tmp/webpacker', 'public/system',
        'vendor', 'storage',  'public/uploads'
 
-# Default value for local_user is ENV['USER']
-# set :local_user, -> { `git config user.name`.chomp }
-
-# Default value for keep_releases is 5
-# set :keep_releases, 5
-
-# Uncomment the following to require manually verifying the host key before first deploy.
-# set :ssh_options, verify_host_key: :secure
-
-before "deploy:assets:precompile", "deploy:yarn_install"
-namespace :deploy do
-  desc "Run rake yarn install"
-  task :yarn_install do
-    on roles(:web) do
-      within release_path do
-        execute("cd #{release_path} && yarn install --silent --no-progress --no-audit --no-optional")
-      end
-    end
-  end
-end
+# before "deploy:update_code", "thinking_sphinx:stop"
+# after "deploy:symlink", "symlink_sphinx_indexes"
+# after "deploy:symlink", "thinking_sphinx:configure"
+# after "deploy:symlink", "thinking_sphinx:start"
 
 namespace :deploy do
   desc 'Restart application'
@@ -46,15 +30,6 @@ namespace :deploy do
     on roles(:app), in: :sequence, wait: 5 do
       # Restart mechanism here
       execute :touch, release_path.join('tmp/restart.txt')
-    end
-  end
-
-  desc "Run rake yarn install"
-  task :yarn_install do
-    on roles(:web) do
-      within release_path do
-        execute("cd #{release_path} && yarn install --silent --no-progress --no-audit --no-optional")
-      end
     end
   end
 
