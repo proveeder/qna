@@ -64,6 +64,10 @@ gem 'jdbc-mysql',      '~> 5.1.35', platform: :jruby
 gem 'mysql2',          '~> 0.4',    platform: :ruby
 gem 'thinking-sphinx', '~> 5.4'
 
+# DEPLOYMENT
+gem 'dotenv'
+gem 'dotenv-deployment', require: 'dotenv/deployment'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -85,6 +89,14 @@ group :development do
   gem 'rack-mini-profiler', '~> 2.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  # gem 'net-ssh', require: false
+  # gem 'bcrypt_pbkdf'
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'ed25519', require: false
 end
 
 group :test do

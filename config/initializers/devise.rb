@@ -272,34 +272,17 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
 
-  case Rails.env
-  when 'test', 'development'
-    config.omniauth :twitter2,
-                    Rails.application.credentials.dig(:development, :twitter_client_id),
-                    Rails.application.credentials.dig(:development, :twitter_client_secret),
-                    callback_path: '/user/auth/twitter2/callback',
-                    scope: 'tweet.read users.read'
+  config.omniauth :twitter2,
+                  Rails.application.credentials.dig(:twitter_client_id),
+                  Rails.application.credentials.dig(:twitter_client_secret),
+                  callback_path: '/user/auth/twitter2/callback',
+                  scope: 'tweet.read users.read'
 
-    config.omniauth :github,
-                    Rails.application.credentials.dig(:development, :github_client_id),
-                    Rails.application.credentials.dig(:development, :github_client_secret),
-                    callback_path: '/user/auth/github/callback',
-                    scope: 'user,public_repo'
-  when 'production'
-    config.omniauth :twitter2,
-                    Rails.application.credentials.dig(:production, :twitter_client_id),
-                    Rails.application.credentials.dig(:production, :twitter_client_secret),
-                    callback_path: '/user/auth/twitter2/callback',
-                    scope: 'tweet.read users.read'
-
-    config.omniauth :github,
-                    Rails.application.credentials.dig(:production, :github_client_id),
-                    Rails.application.credentials.dig(:production, :github_client_secret),
-                    callback_path: '/user/auth/github/callback',
-                    scope: 'user,public_repo'
-  end
-
-
+  config.omniauth :github,
+                  Rails.application.credentials.dig(:github_client_id),
+                  Rails.application.credentials.dig(:github_client_secret),
+                  callback_path: '/user/auth/github/callback',
+                  scope: 'user,public_repo'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
