@@ -40,3 +40,6 @@ yarn-debug.log*
 /public/uploads/
 /config/*.sphinx.conf
 /db/sphinx
+
+config/database.yml
+/config/credentials/production.key

@@ -271,17 +271,34 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  config.omniauth :twitter2,
-                  Rails.application.credentials.dig(:twitter_client_id),
-                  Rails.application.credentials.dig(:twitter_client_secret),
-                  callback_path: '/user/auth/twitter2/callback',
-                  scope: 'tweet.read users.read'
 
-  config.omniauth :github,
-                  '0b4203e9d276a28d68c9',
-                  '9e52f0cbcdb3026b06aaad3beee8da8403bbcc62',
-                  callback_path: '/user/auth/github/callback',
-                  scope: 'user,public_repo'
+  case Rails.env
+  when 'test', 'development'
+    config.omniauth :twitter2,
+                    Rails.application.credentials.dig(:development, :twitter_client_id),
+                    Rails.application.credentials.dig(:development, :twitter_client_secret),
+                    callback_path: '/user/auth/twitter2/callback',
+                    scope: 'tweet.read users.read'
+
+    config.omniauth :github,
+                    Rails.application.credentials.dig(:development, :github_client_id),
+                    Rails.application.credentials.dig(:development, :github_client_secret),
+                    callback_path: '/user/auth/github/callback',
+                    scope: 'user,public_repo'
+  when 'production'
+    config.omniauth :twitter2,
+                    Rails.application.credentials.dig(:production, :twitter_client_id),
+                    Rails.application.credentials.dig(:production, :twitter_client_secret),
+                    callback_path: '/user/auth/twitter2/callback',
+                    scope: 'tweet.read users.read'
+
+    config.omniauth :github,
+                    Rails.application.credentials.dig(:production, :github_client_id),
+                    Rails.application.credentials.dig(:production, :github_client_secret),
+                    callback_path: '/user/auth/github/callback',
+                    scope: 'user,public_repo'
+  end
+
 
 
   # ==> Warden configuration
