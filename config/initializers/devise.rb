@@ -272,8 +272,8 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   config.omniauth :twitter2,
-                  Rails.application.credentials.dig(:development, :twitter_client_id),
-                  Rails.application.credentials.dig(:development, :twitter_client_secret),
+                  Rails.application.credentials.dig(:twitter_client_id),
+                  Rails.application.credentials.dig(:twitter_client_secret),
                   callback_path: '/user/auth/twitter2/callback',
                   scope: 'tweet.read users.read'
 
