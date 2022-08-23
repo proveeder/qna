@@ -1,4 +1,4 @@
-require 'active_support/core_ext/integer/time'
+require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -88,7 +88,7 @@ Rails.application.configure do
   # require "syslog/logger"
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-  if ENV['RAILS_LOG_TO_STDOUT'].present?
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
@@ -124,11 +124,11 @@ Rails.application.configure do
 
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
-    address: 'smtp.gmail.com',
-    port: 587,
-    user_name: 'ababagalamagz@gmail.com',
-    password: 'ababagalamaga_Z',
-    authentication: 'xxkkyuzxuadapvrv',
-    enable_starttls_auto: true
+    :address => "smtp.gmail.com",
+    :port => 587,
+    :user_name => 'ababagalamagz@gmail.com',
+    :password => 'xxkkyuzxuadapvrv',
+    :authentication => "plain",
+    :enable_starttls_auto => true
   }
 end
