@@ -12,17 +12,10 @@ set :deploy_user, 'deployer'
 # Default value for :format is :airbrussh.
 set :format, :airbrussh
 
-# Default value for :linked_files is []
 append :linked_files, 'config/database.yml', 'config/master.key', '.env'
 
-# Default value for linked_dirs is []
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'tmp/webpacker', 'public/system',
        'vendor', 'storage',  'public/uploads'
-
-# before "deploy:update_code", "thinking_sphinx:stop"
-# after "deploy:symlink", "symlink_sphinx_indexes"
-# after "deploy:symlink", "thinking_sphinx:configure"
-# after "deploy:symlink", "thinking_sphinx:start"
 
 namespace :deploy do
   desc 'Restart application'
