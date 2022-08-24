@@ -96,12 +96,12 @@ group :development do
   # gem 'net-ssh', require: false
   # gem 'bcrypt_pbkdf'
   gem 'capistrano', require: false
+  gem 'capistrano3-unicorn', require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano-sidekiq', require: false
   gem 'ed25519', require: false
-  gem 'capistrano3-unicorn', require: false
 end
 
 group :test do
