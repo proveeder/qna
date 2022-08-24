@@ -8,6 +8,7 @@ require 'capistrano/bundler'
 require 'capistrano/rails'
 require 'capistrano/sidekiq'
 require 'thinking_sphinx/capistrano'
+require 'capistrano3/unicorn'
 
 install_plugin Capistrano::Sidekiq
 install_plugin Capistrano::Sidekiq::Systemd

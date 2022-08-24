@@ -70,6 +70,7 @@ gem 'thinking-sphinx', '~> 5.4'
 # DEPLOYMENT
 gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
+gem 'unicorn'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -100,6 +101,7 @@ group :development do
   gem 'capistrano-rvm', require: false
   gem 'capistrano-sidekiq', require: false
   gem 'ed25519', require: false
+  gem 'capistrano3-unicorn', require: false
 end
 
 group :test do
