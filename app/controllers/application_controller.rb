@@ -1,7 +1,7 @@
-require "application_responder"
+require 'application_responder'
 
 class ApplicationController < ActionController::Base
-  before_action :check_email_activation, except: %i[change_email update_email]
+  before_action :check_email_activation
 
   self.responder = ApplicationResponder
   respond_to :html
