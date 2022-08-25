@@ -58,7 +58,7 @@ gem 'oj_mimic_json'
 gem 'responders'
 
 # TASKS
-gem 'sidekiq'
+gem 'sidekiq', '= 5.2.10'
 gem 'sinatra', '>= 1.3.0', require: nil
 gem 'whenever'
 
