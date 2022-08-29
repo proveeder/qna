@@ -2,9 +2,11 @@
   - unless @question.best_answer_id.nil?
     h2 BEST ANSWER:
     p Best answer:
-    = render 'answers/answer', answer: @best_answer
+    - cache @best_answer do
+      = render 'answers/answer', answer: @best_answer
 
 .answers
   - @question.answers.each do |answer|
-    - unless answer == @best_answer
-      = render 'answers/answer', answer: answer
+    - cache answer do
+      - unless answer == @best_answer
+        = render 'answers/answer', answer: answer

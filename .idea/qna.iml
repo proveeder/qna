@@ -54,7 +54,7 @@
     <orderEntry type="library" scope="PROVIDED" name="capistrano-bundler (v2.1.0, rbenv: 2.7.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="capistrano-rails (v1.6.2, rbenv: 2.7.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="capistrano-rvm (v0.1.2, rbenv: 2.7.6) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="capistrano-sidekiq (v2.3.0, rbenv: 2.7.6) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="capistrano-sidekiq (v1.0.3, rbenv: 2.7.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="capistrano3-unicorn (v0.2.1, rbenv: 2.7.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="capybara (v3.37.1, rbenv: 2.7.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="capybara-email (v3.0.2, rbenv: 2.7.6) [gem]" level="application" />
@@ -147,7 +147,12 @@
     <orderEntry type="library" scope="PROVIDED" name="rash_alt (v0.4.12, rbenv: 2.7.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rb-fsevent (v0.11.1, rbenv: 2.7.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rb-inotify (v0.10.1, rbenv: 2.7.6) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="redis (v4.7.1, rbenv: 2.7.6) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="redis (v4.5.1, rbenv: 2.7.6) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="redis-actionpack (v5.3.0, rbenv: 2.7.6) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="redis-activesupport (v5.3.0, rbenv: 2.7.6) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="redis-rack (v2.1.4, rbenv: 2.7.6) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="redis-rails (v5.0.2, rbenv: 2.7.6) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="redis-store (v1.9.1, rbenv: 2.7.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="regexp_parser (v2.5.0, rbenv: 2.7.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="responders (v3.0.1, rbenv: 2.7.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rexml (v3.2.5, rbenv: 2.7.6) [gem]" level="application" />
@@ -170,7 +175,7 @@
     <orderEntry type="library" scope="PROVIDED" name="selenium-webdriver (v4.4.0, rbenv: 2.7.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="semantic_range (v3.0.0, rbenv: 2.7.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="shoulda-matchers (v5.1.0, rbenv: 2.7.6) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="sidekiq (v6.5.4, rbenv: 2.7.6) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="sidekiq (v5.2.10, rbenv: 2.7.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sinatra (v2.2.2, rbenv: 2.7.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="slim (v4.1.0, rbenv: 2.7.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="slim-rails (v3.5.1, rbenv: 2.7.6) [gem]" level="application" />
@@ -265,7 +270,7 @@
         <option value="scaffold" />
         <option value="scaffold_controller" />
         <option value="serializer" />
-        <option value="sidekiq:job" />
+        <option value="sidekiq:worker" />
         <option value="system_test" />
         <option value="task" />
         <option value="test_unit:channel" />
@@ -344,7 +349,7 @@
         <option value="scaffold" />
         <option value="scaffold_controller" />
         <option value="serializer" />
-        <option value="sidekiq:job" />
+        <option value="sidekiq:worker" />
         <option value="system_test" />
         <option value="task" />
         <option value="test_unit:channel" />

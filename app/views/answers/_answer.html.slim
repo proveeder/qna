@@ -9,8 +9,9 @@
 
   ol
     - answer.attachments.each do |a|
-      - unless a.file.file.nil?
-        li= link_to a.file.file.filename, a.file.url
+      - cache do
+        - unless a.file.file.nil?
+          li= link_to a.file.file.filename, a.file.url
 
   - if can? :edit, answer
     .edit-answer

@@ -1,37 +1,38 @@
-| <form action="
-= search_path
-| ">
-|   <label for="text">Text to search</label><br>
-|   <input type="text" name="search_text" id="text" required><br>
+- cache collection_cache_key_for :question do
+  | <form action="
+  = search_path
+  | ">
+  |   <label for="text">Text to search</label><br>
+  |   <input type="text" name="search_text" id="text" required><br>
 
-|   <input type="radio" id="user-radio" name="search_option" value="User" required>
-|   <label for="user-radio">User</label><br>
+  |   <input type="radio" id="user-radio" name="search_option" value="User" required>
+  |   <label for="user-radio">User</label><br>
 
-|   <input type="radio" id="answer-radio" name="search_option" value="Answer" required>
-|   <label for="answer-radio">Answer</label><br>
+  |   <input type="radio" id="answer-radio" name="search_option" value="Answer" required>
+  |   <label for="answer-radio">Answer</label><br>
 
-|   <input type="radio" id="question-radio" name="search_option" value="Question" required>
-|   <label for="question-radio">Question</label><br>
+  |   <input type="radio" id="question-radio" name="search_option" value="Question" required>
+  |   <label for="question-radio">Question</label><br>
 
-|   <input type="radio" id="comment-radio" name="search_option" value="Comment" required>
-|   <label for="comment-radio">Comment</label><br>
+  |   <input type="radio" id="comment-radio" name="search_option" value="Comment" required>
+  |   <label for="comment-radio">Comment</label><br>
 
-|   <input type="radio" id="all-radio" name="search_option" value="ThinkingSphinx" required>
-|   <label for="all-radio">All</label><br>
+  |   <input type="radio" id="all-radio" name="search_option" value="ThinkingSphinx" required>
+  |   <label for="all-radio">All</label><br>
 
-|   <input type="submit" value="Search">
-| </form>
-br
-table
-  thead
-    tr
-      th All questions:
-  tbody
-    - if @questions.empty?
+  |   <input type="submit" value="Search">
+  | </form>
+  br
+  table
+    thead
       tr
-        td No questions asked yet
-    - else
-      - @questions.each do |q|
-        = render 'question_in_index', q: q
-- if can?(:create, Question)
-  p= link_to 'Ask question', new_question_path
+        th All questions:
+    tbody
+      - if @questions.empty?
+        tr
+          td No questions asked yet
+      - else
+        - @questions.each do |q|
+          = render 'question_in_index', q: q
+  - if can?(:create, Question)
+    p= link_to 'Ask question', new_question_path

@@ -4,7 +4,7 @@ class Answer < ApplicationRecord
   validates :user_id, presence: true, allow_blank: false,
                       uniqueness: { scope: :question_id }
 
-  belongs_to :question
+  belongs_to :question, touch: true
   belongs_to :user
 
   has_many :attachments, as: :attachable, dependent: :destroy
