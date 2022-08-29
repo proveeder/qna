@@ -1,12 +1,13 @@
-.row
-  .col
-    = render 'question', question: @question
-  .col
-    .all-answers
-      = render 'all_answers'
+- cache @question do
+  .row
+    .col
+      = render 'question', question: @question
+    .col
+      .all-answers
+        = render 'all_answers'
 
-    - if user_signed_in?
-      - if @question.answers.to_a.intersection(current_user.answers).empty?
-        = render 'answers/create_answer_form', question: @question, answer: @answer
-    - else
-      p You need to sign in or sign up before continuing.
+      - if user_signed_in?
+        - if @question.answers.to_a.intersection(current_user.answers).empty?
+          = render 'answers/create_answer_form', question: @question, answer: @answer
+      - else
+        p You need to sign in or sign up before continuing.

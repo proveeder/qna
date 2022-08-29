@@ -18,7 +18,7 @@
       = button_to 'Unsubscribe', update_question_notification_path(question.id), method: :delete
     - else
       = button_to 'Subscribe', update_question_notification_index_path, params: { id: question.id }
-  .comments
-    = render 'comments/comments', commentable: question
+    .comments
+      = render 'comments/comments', commentable: question
   = render 'comments/form', commentable: question
   div ________________________________________________
