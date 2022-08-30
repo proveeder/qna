@@ -66,7 +66,7 @@ describe 'Questions API' do
         expect(response.status).to eq 200
       end
 
-      %w[id title body created_at updated_at].each do |attr|
+      %w[id title body created_at].each do |attr|
         it "question object contains #{attr}" do
           expect(response.body).to be_json_eql(question.send(attr.to_sym).to_json).at_path(attr)
         end
