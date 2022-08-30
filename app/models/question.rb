@@ -15,6 +15,8 @@ class Question < ApplicationRecord
 
   after_save ThinkingSphinx::RealTime.callback_for(:question)
 
+  default_scope { order(id: :asc) }
+
   private
 
   def subscribe_to_question_updates
