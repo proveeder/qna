@@ -21,7 +21,7 @@ Rails.application.routes.draw do
         get ':id', action: 'show'
 
         get ':question_id/answers', to: 'answers#index'
-        post ':question_id/answers', action: 'create'
+        post ':question_id/answers', to: 'answers#create'
         get ':question_id/answers/:id', to: 'answers#show'
       end
     end
