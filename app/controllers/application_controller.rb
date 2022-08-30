@@ -1,7 +1,7 @@
 require "application_responder"
 
 class ApplicationController < ActionController::Base
-  before_action :check_email_activation
+  before_action :check_email_activation, except: :devise_controller?
 
   self.responder = ApplicationResponder
   respond_to :html
