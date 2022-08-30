@@ -6,9 +6,12 @@ shared_examples_for 'API authenticable' do
     end
 
     it 'returns 401 status if access_token is invalid' do
-      # get '/api/v1/questions', params: { access_token: '1234' }
       do_request(params: { access_token: '1234' })
       expect(response.status).to eq 401
     end
+  end
+
+  def do_request(params = {})
+    get '/api/v1/questions', params
   end
 end

@@ -8,12 +8,13 @@ class Api::V1::AnswersController < Api::V1::BaseController
   end
 
   def create
+    authorize! :create, Answer
     @answer = Answer.new(question_params)
     @answer.question_id = params[:question_id]
     if @answer.save
-      render status: 200
+      render json: :ok
     else
-      render json: @answer.errors
+      render json: @answer.errors, status: 500
     end
   end
 
